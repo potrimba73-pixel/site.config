@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Bot Panel - Configuração</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-brands fa-discord"></i>
+                    <span>BotPanel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-label">GERAL</span>
+                    <a href="#" class="nav-item active" data-section="dashboard">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-label">CONFIGURAÇÕES</span>
+                    <a href="#" class="nav-item" data-section="bot-config">
+                        <i class="fa-solid fa-robot"></i>
+                        <span>Bot & Tokens</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="welcome">
+                        <i class="fa-solid fa-door-open"></i>
+                        <span>Boas-vindas & Adeus</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="moderation">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Moderação</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="logs">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <span>Logs</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="roles">
+                        <i class="fa-solid fa-user-tag"></i>
+                        <span>Cargos Auto</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="tickets">
+                        <i class="fa-solid fa-ticket"></i>
+                        <span>Tickets</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="levels">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Níveis & XP</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-label">FERRAMENTAS</span>
+                    <a href="#" class="nav-item" data-section="embed-builder">
+                        <i class="fa-solid fa-palette"></i>
+                        <span>Embed Builder</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="commands">
+                        <i class="fa-solid fa-terminal"></i>
+                        <span>Comandos</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="bot-status">
+                    <div class="status-dot online"></div>
+                    <span>Bot Online</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1 id="page-title">Dashboard</h1>
+                    <p id="page-subtitle">Visão geral do seu bot</p>
+                </div>
+                <div class="top-actions">
+                    <button class="btn btn-secondary" id="save-draft">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Guardar Rascunho
+                    </button>
+                    <button class="btn btn-primary" id="save-config">
+                        <i class="fa-solid fa-check"></i>
+                        Aplicar Configurações
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Sections -->
+            <div class="content-wrapper">
+
+                <!-- DASHBOARD -->
+                <section id="dashboard" class="content-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #5865F220; color: #5865F2;">
+                                <i class="fa-solid fa-server"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-servers">0</span>
+                                <span class="stat-label">Servidores</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #3BA55D20; color: #3BA55D;">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-users">0</span>
+                                <span class="stat-label">Utilizadores</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #ED424520; color: #ED4245;">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-uptime">0h</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #FAA61A20; color: #FAA61A;">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-commands">0</span>
+                                <span class="stat-label">Comandos/min</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-list-check"></i> Estado das Configurações</h3>
+                            </div>
+                            <div class="config-status-list">
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-robot"></i>
+                                        <span>Bot Token</span>
+                                    </div>
+                                    <span class="status-badge" id="status-bot">Não configurado</span>
+                                </div>
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-door-open"></i>
+                                        <span>Boas-vindas</span>
+                                    </div>
+                                    <span class="status-badge" id="status-welcome">Desativado</span>
+                                </div>
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <span>Moderação</span>
+                                    </div>
+                                    <span class="status-badge" id="status-mod">Desativado</span>
+                                </div>
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                        <span>Canal de Logs</span>
+                                    </div>
+                                    <span class="status-badge" id="status-logs">Não definido</span>
+                                </div>
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-ticket"></i>
+                                        <span>Sistema de Tickets</span>
+                                    </div>
+                                    <span class="status-badge" id="status-tickets">Desativado</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-file-code"></i> Config.json Preview</h3>
+                                <button class="btn btn-sm btn-secondary" id="copy-json">
+                                    <i class="fa-regular fa-copy"></i> Copiar
+                                </button>
+                            </div>
+                            <pre class="json-preview" id="json-preview">{
+  "bot": {
+    "token": "",
+    "clientId": "",
+    "guildId": ""
+  },
+  "welcome": {
+    "enabled": false,
+    "channelId": "",
+    "message": "",
+    "imageEnabled": false,
+    "imageUrl": ""
+  },
+  "goodbye": {
+    "enabled": false,
+    "channelId": "",
+    "message": ""
+  }
+}</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BOT CONFIG -->
+                <section id="bot-config" class="content-section">
+                    <div class="section-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-key"></i> Credenciais do Bot</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Bot Token <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <input type="password" id="bot-token" placeholder="Insere o token do teu bot" data-config="bot.token">
+                                    <button class="toggle-password" type="button"><i class="fa-regular fa-eye"></i></button>
+                                </div>
+                                <span class="help-text">O token secreto do teu bot Discord. Não partilhes!</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Client ID <span class="required">*</span></label>
+                                    <input type="text" id="client-id" placeholder="1234567890123456789" data-config="bot.clientId">
+                                    <span class="help-text">ID da aplicação Discord</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Guild ID (Servidor)</label>
+                                    <input type="text" id="guild-id" placeholder="1234567890123456789" data-config="bot.guildId">
+                                    <span class="help-text">ID do servidor principal (opcional)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Status do Bot</label>
+                                <div class="input-row">
+                                    <select id="bot-status-type" data-config="bot.statusType">
+                                        <option value="online">Online</option>
+                                        <option value="idle">Ausente</option>
+                                        <option value="dnd">Não Perturbar</option>
+                                        <option value="invisible">Invisível</option>
+                                    </select>
+                                    <input type="text" id="bot-status-text" placeholder="A jogar..." data-config="bot.statusText">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-sliders"></i> Opções Gerais</h3>
+                            </div>
+                            <div class="toggle-list">
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Prefixo de Comandos</span>
+                                        <span class="help-text">Prefixo para comandos de texto</span>
+                                    </div>
+                                    <input type="text" id="prefix" class="prefix-input" value="!" data-config="bot.prefix">
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Comandos Slash</span>
+                                        <span class="help-text">Ativar comandos de barra (/)</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="slash-commands" checked data-config="bot.slashCommands">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Mensagens DM</span>
+                                        <span class="help-text">Permitir comandos na DM</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="dm-commands" data-config="bot.dmCommands">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Modo Debug</span>
+                                        <span class="help-text">Logs detalhados no console</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="debug-mode" data-config="bot.debug">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- WELCOME & GOODBYE -->
+                <section id="welcome" class="content-section">
+                    <div class="section-grid">
+                        <!-- Boas-vindas -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-door-open"></i> Boas-vindas</h3>
+                                <label class="switch">
+                                    <input type="checkbox" id="welcome-enabled" data-config="welcome.enabled">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="welcome-content" id="welcome-content">
+                                <div class="form-group">
+                                    <label>Enviar para</label>
+                                    <div class="radio-group">
+                                        <label class="radio-label">
+                                            <input type="radio" name="welcome-send" value="channel" checked data-config="welcome.sendType">
+                                            <span>Canal</span>
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="welcome-send" value="dm" data-config="welcome.sendType">
+                                            <span>DM</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="welcome-channel-group">
+                                    <label>Canal de Boas-vindas</label>
+                                    <div class="channel-input">
+                                        <span class="channel-hash">#</span>
+                                        <input type="text" id="welcome-channel" placeholder="ID do canal ou nome" data-config="welcome.channelId">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Mensagem de Boas-vindas</label>
+                                    <textarea id="welcome-message" rows="4" placeholder="Entrou um novo membro, [user]! Diverte-te connosco!" data-config="welcome.message">Entrou um novo membro, [user]! Diverte-te connosco, mas segue as regras! Agora há [memberCount] membros! 👍</textarea>
+                                    <div class="variables-help">
+                                        <span class="var-tag">[user]</span>
+                                        <span class="var-tag">[userName]</span>
+                                        <span class="var-tag">[memberCount]</span>
+                                        <span class="var-tag">[server]</span>
+                                        <span class="var-tag">[inviter]</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="welcome-image-enabled" data-config="welcome.imageEnabled">
+                                        <span>Enviar imagem de boas-vindas</span>
+                                    </label>
+                                </div>
+
+                                <div class="image-config" id="welcome-image-config">
+                                    <div class="image-preview-box">
+                                        <img id="welcome-image-preview" src="" alt="Preview">
+                                        <div class="image-overlay">
+                                            <span class="preview-text">ProBot</span>
+                                            <span class="preview-subtext">Bem-Vindo a Portugal Alfa Community</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>URL da Imagem de Fundo</label>
+                                        <input type="url" id="welcome-image-url" placeholder="https://..." data-config="welcome.imageUrl">
+                                    </div>
+                                    <div class="image-tabs">
+                                        <button class="tab-btn active">Imagem de fundo</button>
+                                        <button class="tab-btn">Avatar</button>
+                                        <button class="tab-btn">Nome do Utilizador</button>
+                                        <button class="tab-btn">Texto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Adeus -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-person-walking-arrow-right"></i> Adeus</h3>
+                                <label class="switch">
+                                    <input type="checkbox" id="goodbye-enabled" data-config="goodbye.enabled">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="goodbye-content" id="goodbye-content">
+                                <div class="form-group">
+                                    <label>Canal de Adeus</label>
+                                    <div class="channel-input">
+                                        <span class="channel-hash">#</span>
+                                        <input type="text" id="goodbye-channel" placeholder="ID do canal ou nome" data-config="goodbye.channelId">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Mensagem de Adeus</label>
+                                    <textarea id="goodbye-message" rows="4" placeholder="Oh, o [userName] saiu do servidor..." data-config="goodbye.message">Oh, o [userName] saiu do servidor 😢, faz boa viagem! Ainda restam [memberCount] membros.</textarea>
+                                    <div class="variables-help">
+                                        <span class="var-tag">[user]</span>
+                                        <span class="var-tag">[userName]</span>
+                                        <span class="var-tag">[memberCount]</span>
+                                        <span class="var-tag">[server]</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MODERATION -->
+                <section id="moderation" class="content-section">
+                    <div class="section-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-shield-halved"></i> Auto-Moderação</h3>
+                            </div>
+                            <div class="toggle-list">
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Anti-Spam</span>
+                                        <span class="help-text">Deteta e remove mensagens spam</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="anti-spam" data-config="moderation.antiSpam">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Anti-Link</span>
+                                        <span class="help-text">Bloqueia links não autorizados</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="anti-link" data-config="moderation.antiLink">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Anti-Mencção em Massa</span>
+                                        <span class="help-text">Bloqueia @everyone/@here abusivos</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="anti-mass-mention" data-config="moderation.antiMassMention">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Filtro de Palavrões</span>
+                                        <span class="help-text">Remove linguagem ofensiva</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="profanity-filter" data-config="moderation.profanityFilter">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-gavel"></i> Configurações de Punição</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo de Mute</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">@</span>
+                                    <input type="text" id="mute-role" placeholder="ID do cargo de mute" data-config="moderation.muteRole">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo de Staff/Mod</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">@</span>
+                                    <input type="text" id="mod-role" placeholder="ID do cargo de moderador" data-config="moderation.modRole">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo de Admin</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">@</span>
+                                    <input type="text" id="admin-role" placeholder="ID do cargo de admin" data-config="moderation.adminRole">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Limite de Avisos (Warns)</label>
+                                    <input type="number" id="warn-limit" value="3" min="1" max="10" data-config="moderation.warnLimit">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ação após Limite</label>
+                                    <select id="warn-action" data-config="moderation.warnAction">
+                                        <option value="mute">Mute</option>
+                                        <option value="kick">Kick</option>
+                                        <option value="ban">Ban</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- LOGS -->
+                <section id="logs" class="content-section">
+                    <div class="section-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-file-lines"></i> Canais de Log</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Canal de Logs Geral</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="log-channel" placeholder="ID do canal de logs" data-config="logs.generalChannel">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Canal de Logs de Moderação</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="modlog-channel" placeholder="ID do canal de mod logs" data-config="logs.modChannel">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Canal de Logs de Entradas/Saídas</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="joinlog-channel" placeholder="ID do canal" data-config="logs.joinChannel">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-eye"></i> Eventos a Logar</h3>
+                            </div>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-card">
+                                    <input type="checkbox" checked data-config="logs.events.messageDelete">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-trash"></i>
+                                        <span>Mensagens Apagadas</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" checked data-config="logs.events.messageEdit">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        <span>Mensagens Editadas</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" checked data-config="logs.events.memberJoin">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                        <span>Entradas</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" checked data-config="logs.events.memberLeave">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-user-minus"></i>
+                                        <span>Saídas</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" data-config="logs.events.roleChange">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-user-tag"></i>
+                                        <span>Alterações de Cargos</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" data-config="logs.events.channelChange">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-hashtag"></i>
+                                        <span>Alterações de Canais</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" data-config="logs.events.voiceChange">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-microphone"></i>
+                                        <span>Atividade de Voz</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" data-config="logs.events.banUnban">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-ban"></i>
+                                        <span>Bans/Unbans</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AUTO ROLES -->
+                <section id="roles" class="content-section">
+                    <div class="section-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-user-tag"></i> Cargos Automáticos</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo ao Entrar</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">@</span>
+                                    <input type="text" id="autorole" placeholder="ID do cargo" data-config="roles.autoRole">
+                                </div>
+                                <span class="help-text">Cargo dado automaticamente a novos membros</span>
+                            </div>
+
+                            <div class="roles-list" id="reaction-roles-list">
+                                <div class="list-header">
+                                    <h4>Reaction Roles</h4>
+                                    <button class="btn btn-sm btn-primary" id="add-reaction-role">
+                                        <i class="fa-solid fa-plus"></i> Adicionar
+                                    </button>
+                                </div>
+                                <div class="list-items" id="reaction-roles-items">
+                                    <!-- Dinâmico via JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Cargos por Botão</h3>
+                            </div>
+                            <div class="button-roles-preview">
+                                <div class="preview-message">
+                                    <div class="preview-header">
+                                        <img src="https://cdn.discordapp.com/embed/avatars/0.png" class="preview-avatar">
+                                        <div>
+                                            <span class="preview-name">BotPanel</span>
+                                            <span class="preview-bot-tag">BOT</span>
+                                        </div>
+                                    </div>
+                                    <div class="preview-content">
+                                        <p>Escolhe os teus cargos:</p>
+                                        <div class="preview-buttons">
+                                            <button class="preview-btn">🎮 Gaming</button>
+                                            <button class="preview-btn">🎵 Música</button>
+                                            <button class="preview-btn">🎨 Arte</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="create-button-role">
+                                <i class="fa-solid fa-plus"></i> Criar Painel de Cargos
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TICKETS -->
+                <section id="tickets" class="content-section">
+                    <div class="section-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-ticket"></i> Sistema de Tickets</h3>
+                                <label class="switch">
+                                    <input type="checkbox" id="tickets-enabled" data-config="tickets.enabled">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="tickets-content" id="tickets-content">
+                                <div class="form-group">
+                                    <label>Categoria de Tickets</label>
+                                    <div class="channel-input">
+                                        <span class="channel-hash">📁</span>
+                                        <input type="text" id="ticket-category" placeholder="ID da categoria" data-config="tickets.categoryId">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Cargo de Suporte</label>
+                                    <div class="channel-input">
+                                        <span class="channel-hash">@</span>
+                                        <input type="text" id="ticket-support-role" placeholder="ID do cargo de suporte" data-config="tickets.supportRole">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mensagem do Painel</label>
+                                    <textarea id="ticket-message" rows="3" data-config="tickets.panelMessage">Clica no botão abaixo para abrir um ticket de suporte!</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Emoji do Botão</label>
+                                    <input type="text" id="ticket-emoji" value="🎫" class="emoji-input" data-config="tickets.buttonEmoji">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-envelope-open-text"></i> Transcript</h3>
+                            </div>
+                            <div class="toggle-list">
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Guardar Transcript</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="ticket-transcript" checked data-config="tickets.saveTranscript">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Canal de Transcripts</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="transcript-channel" placeholder="ID do canal" data-config="tickets.transcriptChannel">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- LEVELS -->
+                <section id="levels" class="content-section">
+                    <div class="section-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-chart-line"></i> Sistema de Níveis</h3>
+                                <label class="switch">
+                                    <input type="checkbox" id="levels-enabled" data-config="levels.enabled">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="levels-content" id="levels-content">
+                                <div class="form-group">
+                                    <label>Multiplicador de XP</label>
+                                    <input type="range" id="xp-multiplier" min="0.5" max="5" step="0.5" value="1" data-config="levels.xpMultiplier">
+                                    <span class="range-value" id="xp-multiplier-value">1x</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Cooldown entre mensagens (segundos)</label>
+                                    <input type="number" id="xp-cooldown" value="60" min="10" max="300" data-config="levels.cooldown">
+                                </div>
+                                <div class="form-group">
+                                    <label>Canal de Anúncios de Level Up</label>
+                                    <div class="channel-input">
+                                        <span class="channel-hash">#</span>
+                                        <input type="text" id="levelup-channel" placeholder="ID do canal (deixa vazio para o canal atual)" data-config="levels.announceChannel">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-trophy"></i> Recompensas por Nível</h3>
+                            </div>
+                            <div class="level-rewards" id="level-rewards">
+                                <div class="reward-item">
+                                    <span class="reward-level">Nível 5</span>
+                                    <span class="reward-arrow">→</span>
+                                    <div class="channel-input">
+                                        <span class="channel-hash">@</span>
+                                        <input type="text" placeholder="ID do cargo" data-config="levels.rewards.5">
+                                    </div>
+                                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                <div class="reward-item">
+                                    <span class="reward-level">Nível 10</span>
+                                    <span class="reward-arrow">→</span>
+                                    <div class="channel-input">
+                                        <span class="channel-hash">@</span>
+                                        <input type="text" placeholder="ID do cargo" data-config="levels.rewards.10">
+                                    </div>
+                                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                <div class="reward-item">
+                                    <span class="reward-level">Nível 25</span>
+                                    <span class="reward-arrow">→</span>
+                                    <div class="channel-input">
+                                        <span class="channel-hash">@</span>
+                                        <input type="text" placeholder="ID do cargo" data-config="levels.rewards.25">
+                                    </div>
+                                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                                <button class="btn btn-sm btn-secondary btn-block" id="add-level-reward">
+                                    <i class="fa-solid fa-plus"></i> Adicionar Recompensa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- EMBED BUILDER -->
+                <section id="embed-builder" class="content-section">
+                    <div class="section-grid embed-builder-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-palette"></i> Editor</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Título</label>
+                                <input type="text" id="embed-title" placeholder="Título do embed">
+                            </div>
+                            <div class="form-group">
+                                <label>Descrição</label>
+                                <textarea id="embed-description" rows="4" placeholder="Descrição do embed..."></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Cor</label>
+                                    <input type="color" id="embed-color" value="#5865F2">
+                                </div>
+                                <div class="form-group">
+                                    <label>URL</label>
+                                    <input type="url" id="embed-url" placeholder="https://...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Thumbnail URL</label>
+                                <input type="url" id="embed-thumbnail" placeholder="https://...">
+                            </div>
+                            <div class="form-group">
+                                <label>Image URL</label>
+                                <input type="url" id="embed-image" placeholder="https://...">
+                            </div>
+                            <div class="form-group">
+                                <label>Footer</label>
+                                <input type="text" id="embed-footer" placeholder="Texto do footer">
+                            </div>
+                            <div class="form-group">
+                                <label>Timestamp</label>
+                                <label class="switch">
+                                    <input type="checkbox" id="embed-timestamp">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-eye"></i> Preview</h3>
+                            </div>
+                            <div class="embed-preview" id="embed-preview">
+                                <div class="discord-embed">
+                                    <div class="embed-color-bar" style="background: #5865F2;"></div>
+                                    <div class="embed-content">
+                                        <div class="embed-title">Título do Embed</div>
+                                        <div class="embed-description">Descrição do embed aparece aqui...</div>
+                                        <div class="embed-footer">
+                                            <span>Footer text</span>
+                                            <span class="embed-timestamp">Hoje às 14:30</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>JSON do Embed</label>
+                                <textarea class="json-preview" id="embed-json" rows="8" readonly></textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="copy-embed-json">
+                                <i class="fa-regular fa-copy"></i> Copiar JSON
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- COMMANDS -->
+                <section id="commands" class="content-section">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-terminal"></i> Comandos Personalizados</h3>
+                            <button class="btn btn-sm btn-primary" id="add-command">
+                                <i class="fa-solid fa-plus"></i> Novo Comando
+                            </button>
+                        </div>
+                        <div class="commands-list" id="commands-list">
+                            <div class="command-item">
+                                <div class="command-info">
+                                    <span class="command-name">/help</span>
+                                    <span class="command-desc">Mostra a lista de comandos</span>
+                                </div>
+                                <div class="command-actions">
+                                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-info">
+                                    <span class="command-name">/ping</span>
+                                    <span class="command-desc">Verifica a latência do bot</span>
+                                </div>
+                                <div class="command-actions">
+                                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

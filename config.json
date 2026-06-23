@@ -1,0 +1,75 @@
+{
+  "bot": {
+    "token": "MTUxNTQxNjc2MDU5MTg0NzUzNg.GLe0Pv.BsZ6hMn2sedRCEEFoAdJVJvq_j1lAk-fV3JNBw",
+    "clientId": "1515416760591847536",
+    "guildId": "",
+    "statusType": "online",
+    "statusText": "",
+    "prefix": "!",
+    "slashCommands": true,
+    "dmCommands": false,
+    "debug": false
+  },
+  "welcome": {
+    "enabled": true,
+    "sendType": "channel",
+    "channelId": "",
+    "message": "Entrou um novo membro, [user]! Diverte-te connosco, mas segue as regras! Agora há [memberCount] membros! 👍",
+    "imageEnabled": true,
+    "imageUrl": "https://cdn.discordapp.com/attachments/1510402588174975059/1518794463412093080/jw0528b.png?ex=6a3b3711&is=6a39e591&hm=7d779e8e71e2a6336b3173a5b09db71ffc818b69c8ff93c12516dc0e2673c38b&animated=true"
+  },
+  "goodbye": {
+    "enabled": false,
+    "channelId": "",
+    "message": "Oh, o [userName] saiu do servidor 😢, faz boa viagem! Ainda restam [memberCount] membros."
+  },
+  "moderation": {
+    "antiSpam": false,
+    "antiLink": false,
+    "antiMassMention": false,
+    "profanityFilter": false,
+    "muteRole": "",
+    "modRole": "",
+    "adminRole": "",
+    "warnLimit": 3,
+    "warnAction": "mute"
+  },
+  "logs": {
+    "generalChannel": "",
+    "modChannel": "",
+    "joinChannel": "",
+    "events": {
+      "messageDelete": true,
+      "messageEdit": true,
+      "memberJoin": true,
+      "memberLeave": true,
+      "roleChange": false,
+      "channelChange": false,
+      "voiceChange": false,
+      "banUnban": false
+    }
+  },
+  "roles": {
+    "autoRole": ""
+  },
+  "tickets": {
+    "enabled": false,
+    "categoryId": "",
+    "supportRole": "",
+    "panelMessage": "Clica no botão abaixo para abrir um ticket de suporte!",
+    "buttonEmoji": "🎫",
+    "saveTranscript": true,
+    "transcriptChannel": ""
+  },
+  "levels": {
+    "enabled": false,
+    "xpMultiplier": 1,
+    "cooldown": 60,
+    "announceChannel": "",
+    "rewards": {
+      "5": "",
+      "10": "",
+      "25": ""
+    }
+  }
+}

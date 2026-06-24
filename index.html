@@ -1,331 +1,1107 @@
-<section id="welcome" class="content-section active">
-    <div class="dashboard-grid">
-        <!-- Configurações de Texto -->
-        <div class="panel-card">
-            <div class="panel-header">
-                <h3><i class="fas fa-comment-dots"></i> Mensagem de Boas-vindas</h3>
-                <label class="switch">
-                    <input type="checkbox" id="welcome-enabled" data-config="welcome.enabled">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div id="welcome-content">
-                <div class="form-group">
-                    <label>Enviar para</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="welcome-send" value="channel" checked data-config="welcome.sendType">
-                            Canal
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="welcome-send" value="dm" data-config="welcome.sendType">
-                            DM
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Canal de Boas-vindas <span class="required">*</span></label>
-                    <div class="channel-input">
-                        <span class="channel-hash">#</span>
-                        <input type="text" id="welcome-channel" placeholder="boas-vindas" data-config="welcome.channelId">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Mensagem de Boas-vindas</label>
-                    <textarea id="welcome-message" rows="4" data-config="welcome.message">Entrou um novo membro, [user]! Diverte-te connosco! Agora há [memberCount] membros! 👍</textarea>
-                    <div class="variables-help">
-                        <span class="var-tag">[user]</span>
-                        <span class="var-tag">[userName]</span>
-                        <span class="var-tag">[memberCount]</span>
-                        <span class="var-tag">[server]</span>
-                        <span class="var-tag">[inviter]</span>
-                    </div>
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Bot Panel - Configuração</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Oswald:wght@400;700&family=Bebas+Neue&family=Lato:wght@400;700&family=Nunito:wght@400;700&family=Raleway:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+<base target="_blank">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-robot"></i>
+                    <span>Bot Panel</span>
                 </div>
             </div>
-        </div>
-
-        <!-- Configuração da Imagem -->
-        <div class="panel-card">
-            <div class="panel-header">
-                <h3><i class="fas fa-image"></i> Imagem de Boas-vindas</h3>
-                <label class="switch">
-                    <input type="checkbox" id="welcome-image-enabled" data-config="welcome.imageEnabled">
-                    <span class="slider"></span>
-                </label>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-label">Principal</span>
+                    <a href="#" class="nav-item active" data-section="dashboard">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="bot-config">
+                        <i class="fa-solid fa-key"></i>
+                        <span>Bot & Tokens</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">Configurações</span>
+                    <a href="#" class="nav-item" data-section="welcome">
+                        <i class="fa-solid fa-door-open"></i>
+                        <span>Boas-vindas & Adeus</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="moderation">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Moderação</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="logs">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <span>Logs</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="roles">
+                        <i class="fa-solid fa-id-badge"></i>
+                        <span>Cargos Auto</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="tickets">
+                        <i class="fa-solid fa-ticket"></i>
+                        <span>Tickets</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="levels">
+                        <i class="fa-solid fa-trophy"></i>
+                        <span>Níveis & XP</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">Ferramentas</span>
+                    <a href="#" class="nav-item" data-section="embed-builder">
+                        <i class="fa-solid fa-palette"></i>
+                        <span>Embed Builder</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="commands">
+                        <i class="fa-solid fa-terminal"></i>
+                        <span>Comandos</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="bot-status">
+                    <span class="status-dot offline" id="bot-status-dot"></span>
+                    <span id="bot-status-text">Offline</span>
+                </div>
             </div>
-            <div id="welcome-image-config" style="display: none;">
-                
-                <!-- Tabs -->
-                <div class="image-tabs">
-                    <button class="tab-btn active" data-tab="background">Imagem de fundo</button>
-                    <button class="tab-btn" data-tab="avatar">Avatar</button>
-                    <button class="tab-btn" data-tab="username">Nome do Utilizador</button>
-                    <button class="tab-btn" data-tab="text">Texto</button>
-                </div>
+        </aside>
 
-                <!-- Preview -->
-                <div class="welcome-canvas-wrapper">
-                    <canvas id="welcome-canvas" width="1024" height="450"></canvas>
-                    <div class="canvas-loading" id="canvas-loading">A carregar preview...</div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1 id="page-title">Dashboard</h1>
+                    <p id="page-subtitle">Visão geral do teu bot</p>
                 </div>
+                <div class="top-actions">
+                    <button class="btn btn-secondary" id="save-draft"><i class="fa-solid fa-save"></i> Guardar Rascunho</button>
+                    <button class="btn btn-primary" id="save-config"><i class="fa-solid fa-download"></i> Aplicar Configurações</button>
+                </div>
+            </header>
 
-                <!-- Controles da Tab Ativa -->
-                <div class="tab-contents">
-                    
-                    <!-- BACKGROUND -->
-                    <div class="tab-content active" data-content="background">
-                        <div class="form-group">
-                            <label>URL da Imagem de Fundo</label>
-                            <input type="text" id="bg-image-url" placeholder="https://..." data-config="welcome.image.backgroundUrl">
-                            <span class="help-text">Ou escolhe uma da galeria abaixo</span>
-                        </div>
-                        <div class="form-group">
-                            <label>Galeria de Fundos</label>
-                            <div class="bg-gallery" id="bg-gallery">
-                                <div class="bg-thumb active" data-url="https://probot.media/muc2fw4ibY.png">
-                                    <img src="https://probot.media/muc2fw4ibY.png" alt="ProBot">
-                                </div>
-                                <div class="bg-thumb" data-url="https://i.imgur.com/8Km9tLL.jpg">
-                                    <img src="https://i.imgur.com/8Km9tLL.jpg" alt="Abstract">
-                                </div>
-                                <div class="bg-thumb" data-url="https://i.imgur.com/Zk6TR5k.jpg">
-                                    <img src="https://i.imgur.com/Zk6TR5k.jpg" alt="Space">
-                                </div>
-                                <div class="bg-thumb" data-url="https://i.imgur.com/JYUB0mG.jpg">
-                                    <img src="https://i.imgur.com/JYUB0mG.jpg" alt="City">
-                                </div>
-                                <div class="bg-thumb" data-url="https://i.imgur.com/4NZh8zF.jpg">
-                                    <img src="https://i.imgur.com/4NZh8zF.jpg" alt="Nature">
-                                </div>
-                                <div class="bg-thumb" data-url="https://i.imgur.com/Qn3dYHx.jpg">
-                                    <img src="https://i.imgur.com/Qn3dYHx.jpg" alt="Gradient">
-                                </div>
+            <div class="content-wrapper">
+
+                <!-- DASHBOARD -->
+                <section id="dashboard" class="content-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(88,101,242,0.15); color: var(--accent-primary);">
+                                <i class="fa-solid fa-server"></i>
+                            </div>
+                            <div>
+                                <span class="stat-value" id="stat-servers">0</span>
+                                <span class="stat-label">Servidores</span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Overlay Opacidade</label>
-                            <div class="range-with-value">
-                                <input type="range" id="bg-overlay-opacity" min="0" max="100" value="50" data-config="welcome.image.overlayOpacity">
-                                <span class="range-value" id="overlay-value">50%</span>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(59,165,93,0.15); color: var(--accent-success);">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div>
+                                <span class="stat-value" id="stat-users">0</span>
+                                <span class="stat-label">Utilizadores</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(0,175,244,0.15); color: var(--accent-info);">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <span class="stat-value" id="stat-uptime">0h</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(250,166,26,0.15); color: var(--accent-warning);">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div>
+                                <span class="stat-value" id="stat-commands">0</span>
+                                <span class="stat-label">Comandos/min</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- AVATAR -->
-                    <div class="tab-content" data-content="avatar">
-                        <div class="form-row compact">
-                            <div class="form-group">
-                                <label>Posição X</label>
-                                <div class="coord-control">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('avatar-x', -10)"><i class="fas fa-minus"></i></button>
-                                    <input type="number" id="avatar-x" value="512" data-config="welcome.image.avatarX">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('avatar-x', 10)"><i class="fas fa-plus"></i></button>
-                                </div>
+                    <div class="dashboard-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-circle-info"></i> Estado da Configuração</h3>
                             </div>
-                            <div class="form-group">
-                                <label>Posição Y</label>
-                                <div class="coord-control">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('avatar-y', -10)"><i class="fas fa-minus"></i></button>
-                                    <input type="number" id="avatar-y" value="180" data-config="welcome.image.avatarY">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('avatar-y', 10)"><i class="fas fa-plus"></i></button>
+                            <div class="config-status-list">
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-key"></i>
+                                        <span>Bot Token</span>
+                                    </div>
+                                    <span class="status-badge" id="status-bot">Não configurado</span>
+                                </div>
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-door-open"></i>
+                                        <span>Boas-vindas</span>
+                                    </div>
+                                    <span class="status-badge" id="status-welcome">Desativado</span>
+                                </div>
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <span>Moderação</span>
+                                    </div>
+                                    <span class="status-badge" id="status-mod">Desativado</span>
+                                </div>
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                        <span>Canal de Logs</span>
+                                    </div>
+                                    <span class="status-badge" id="status-logs">Não definido</span>
+                                </div>
+                                <div class="config-status-item">
+                                    <div class="status-info">
+                                        <i class="fa-solid fa-ticket"></i>
+                                        <span>Sistema de Tickets</span>
+                                    </div>
+                                    <span class="status-badge" id="status-tickets">Desativado</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row compact">
-                            <div class="form-group">
-                                <label>Tamanho</label>
-                                <div class="coord-control">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('avatar-size', -5)"><i class="fas fa-minus"></i></button>
-                                    <input type="number" id="avatar-size" value="140" data-config="welcome.image.avatarSize">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('avatar-size', 5)"><i class="fas fa-plus"></i></button>
-                                </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-code"></i> Preview do config.json</h3>
+                                <button class="btn btn-sm btn-secondary" id="copy-json"><i class="fa-solid fa-copy"></i> Copiar</button>
                             </div>
                             <div class="form-group">
-                                <label>Forma</label>
-                                <select id="avatar-shape" data-config="welcome.image.avatarShape">
-                                    <option value="circle">Círculo</option>
-                                    <option value="square">Quadrado</option>
-                                    <option value="rounded">Cantos Arredondados</option>
+                                <pre class="json-preview" id="json-preview"></pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BOT CONFIG -->
+                <section id="bot-config" class="content-section">
+                    <div class="section-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-key"></i> Credenciais do Bot</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Bot Token <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <input type="password" id="bot-token" placeholder="Insere o token do teu bot" data-config="bot.token">
+                                    <button class="toggle-password" type="button"><i class="fa-solid fa-eye"></i></button>
+                                </div>
+                                <span class="help-text">O token secreto do teu bot Discord. Não partilhes!</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Client ID <span class="required">*</span></label>
+                                    <input type="text" id="client-id" placeholder="ID da aplicação Discord" data-config="bot.clientId">
+                                </div>
+                                <div class="form-group">
+                                    <label>Guild ID (Servidor)</label>
+                                    <input type="text" id="guild-id" placeholder="ID do servidor principal (opcional)" data-config="bot.guildId">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-sliders"></i> Opções Gerais</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Status do Bot</label>
+                                <select id="bot-status" data-config="bot.statusType">
+                                    <option value="online">Online</option>
+                                    <option value="idle">Ausente</option>
+                                    <option value="dnd">Não Perturbar</option>
+                                    <option value="invisible">Invisível</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Borda</label>
-                            <div class="range-with-value">
-                                <input type="range" id="avatar-border" min="0" max="20" value="6" data-config="welcome.image.avatarBorder">
-                                <span class="range-value" id="border-value">6px</span>
+                            <div class="form-group">
+                                <label>Texto do Status</label>
+                                <input type="text" id="status-text" placeholder="A jogar..." data-config="bot.statusText">
+                            </div>
+                            <div class="form-group">
+                                <label>Prefixo de Comandos</label>
+                                <input type="text" id="bot-prefix" class="prefix-input" value="!" maxlength="5" data-config="bot.prefix">
+                            </div>
+                            <div class="toggle-list">
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Comandos Slash</span>
+                                        <span class="help-text">Ativar comandos de barra (/)</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="slash-commands" checked data-config="bot.slashCommands">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Mensagens DM</span>
+                                        <span class="help-text">Permitir comandos na DM</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="dm-commands" data-config="bot.dmCommands">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Modo Debug</span>
+                                        <span class="help-text">Logs detalhados no console</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="debug-mode" data-config="bot.debug">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Cor da Borda</label>
-                            <div class="color-picker-wrapper">
-                                <input type="color" id="avatar-border-color" value="#ffffff" data-config="welcome.image.avatarBorderColor">
-                                <input type="text" class="color-hex" id="avatar-border-hex" value="#ffffff">
+                    </div>
+                </section>
+
+                <!-- WELCOME & GOODBYE -->
+                <section id="welcome" class="content-section">
+                    <div class="dashboard-grid">
+                        <!-- Mensagem de Boas-vindas -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-door-open"></i> Mensagem de Boas-vindas</h3>
+                                <label class="switch">
+                                    <input type="checkbox" id="welcome-enabled" data-config="welcome.enabled">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div id="welcome-content">
+                                <div class="form-group">
+                                    <label>Enviar para</label>
+                                    <div class="radio-group">
+                                        <label class="radio-label">
+                                            <input type="radio" name="welcome-send" value="channel" checked data-config="welcome.sendType">
+                                            Canal
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="welcome-send" value="dm" data-config="welcome.sendType">
+                                            DM
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Canal de Boas-vindas <span class="required">*</span></label>
+                                    <div class="channel-input">
+                                        <span class="channel-hash">#</span>
+                                        <input type="text" id="welcome-channel" placeholder="boas-vindas" data-config="welcome.channelId">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mensagem de Boas-vindas</label>
+                                    <textarea id="welcome-message" rows="4" data-config="welcome.message">Entrou um novo membro, [user]! Diverte-te connosco, mas segue as regras! Agora há [memberCount] membros! 👍</textarea>
+                                    <div class="variables-help">
+                                        <span class="var-tag">[user]</span>
+                                        <span class="var-tag">[userName]</span>
+                                        <span class="var-tag">[memberCount]</span>
+                                        <span class="var-tag">[server]</span>
+                                        <span class="var-tag">[inviter]</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Imagem de Boas-vindas (ProBot Style) -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-image"></i> Imagem de Boas-vindas</h3>
+                                <label class="switch">
+                                    <input type="checkbox" id="welcome-image-enabled" data-config="welcome.imageEnabled">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div id="welcome-image-config" style="display: none;">
+
+                                <!-- Tabs -->
+                                <div class="image-tabs">
+                                    <button class="tab-btn active" data-tab="background">Imagem de fundo</button>
+                                    <button class="tab-btn" data-tab="avatar">Avatar</button>
+                                    <button class="tab-btn" data-tab="username">Nome do Utilizador</button>
+                                    <button class="tab-btn" data-tab="text">Texto</button>
+                                </div>
+
+                                <!-- Canvas Preview -->
+                                <div class="welcome-canvas-wrapper">
+                                    <canvas id="welcome-canvas" width="1024" height="450"></canvas>
+                                    <div class="canvas-loading" id="canvas-loading">A carregar preview...</div>
+                                </div>
+
+                                <!-- Tab Contents -->
+                                <div class="tab-contents">
+
+                                    <!-- BACKGROUND -->
+                                    <div class="tab-content active" data-content="background">
+                                        <div class="form-group">
+                                            <label>URL da Imagem de Fundo</label>
+                                            <input type="text" id="bg-image-url" placeholder="https://..." data-config="welcome.image.backgroundUrl">
+                                            <span class="help-text">Ou escolhe uma da galeria abaixo</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Galeria de Fundos</label>
+                                            <div class="bg-gallery" id="bg-gallery">
+                                                <div class="bg-thumb active" data-url="https://probot.media/muc2fw4ibY.png">
+                                                    <img src="https://probot.media/muc2fw4ibY.png" alt="ProBot" crossorigin="anonymous">
+                                                </div>
+                                                <div class="bg-thumb" data-url="https://i.imgur.com/8Km9tLL.jpg">
+                                                    <img src="https://i.imgur.com/8Km9tLL.jpg" alt="Abstract" crossorigin="anonymous">
+                                                </div>
+                                                <div class="bg-thumb" data-url="https://i.imgur.com/Zk6TR5k.jpg">
+                                                    <img src="https://i.imgur.com/Zk6TR5k.jpg" alt="Space" crossorigin="anonymous">
+                                                </div>
+                                                <div class="bg-thumb" data-url="https://i.imgur.com/JYUB0mG.jpg">
+                                                    <img src="https://i.imgur.com/JYUB0mG.jpg" alt="City" crossorigin="anonymous">
+                                                </div>
+                                                <div class="bg-thumb" data-url="https://i.imgur.com/4NZh8zF.jpg">
+                                                    <img src="https://i.imgur.com/4NZh8zF.jpg" alt="Nature" crossorigin="anonymous">
+                                                </div>
+                                                <div class="bg-thumb" data-url="https://i.imgur.com/Qn3dYHx.jpg">
+                                                    <img src="https://i.imgur.com/Qn3dYHx.jpg" alt="Gradient" crossorigin="anonymous">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Overlay Opacidade</label>
+                                            <div class="range-with-value">
+                                                <input type="range" id="bg-overlay-opacity" min="0" max="100" value="50" data-config="welcome.image.overlayOpacity">
+                                                <span class="range-value" id="overlay-value">50%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- AVATAR -->
+                                    <div class="tab-content" data-content="avatar">
+                                        <div class="form-row compact">
+                                            <div class="form-group">
+                                                <label>Posição X</label>
+                                                <div class="coord-control">
+                                                    <button class="btn-icon btn-sm" data-adjust="avatar-x" data-delta="-10"><i class="fas fa-minus"></i></button>
+                                                    <input type="number" id="avatar-x" value="512" data-config="welcome.image.avatarX">
+                                                    <button class="btn-icon btn-sm" data-adjust="avatar-x" data-delta="10"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Posição Y</label>
+                                                <div class="coord-control">
+                                                    <button class="btn-icon btn-sm" data-adjust="avatar-y" data-delta="-10"><i class="fas fa-minus"></i></button>
+                                                    <input type="number" id="avatar-y" value="180" data-config="welcome.image.avatarY">
+                                                    <button class="btn-icon btn-sm" data-adjust="avatar-y" data-delta="10"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row compact">
+                                            <div class="form-group">
+                                                <label>Tamanho</label>
+                                                <div class="coord-control">
+                                                    <button class="btn-icon btn-sm" data-adjust="avatar-size" data-delta="-5"><i class="fas fa-minus"></i></button>
+                                                    <input type="number" id="avatar-size" value="140" data-config="welcome.image.avatarSize">
+                                                    <button class="btn-icon btn-sm" data-adjust="avatar-size" data-delta="5"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Forma</label>
+                                                <select id="avatar-shape" data-config="welcome.image.avatarShape">
+                                                    <option value="circle">Círculo</option>
+                                                    <option value="square">Quadrado</option>
+                                                    <option value="rounded">Cantos Arredondados</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Borda</label>
+                                            <div class="range-with-value">
+                                                <input type="range" id="avatar-border" min="0" max="20" value="6" data-config="welcome.image.avatarBorder">
+                                                <span class="range-value" id="border-value">6px</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Cor da Borda</label>
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="avatar-border-color" value="#ffffff" data-config="welcome.image.avatarBorderColor">
+                                                <input type="text" class="color-hex" id="avatar-border-hex" value="#FFFFFF">
+                                                <span class="color-rgb" id="avatar-border-rgb">rgb(255,255,255)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- USERNAME -->
+                                    <div class="tab-content" data-content="username">
+                                        <div class="form-row compact">
+                                            <div class="form-group">
+                                                <label>Posição X</label>
+                                                <div class="coord-control">
+                                                    <button class="btn-icon btn-sm" data-adjust="username-x" data-delta="-10"><i class="fas fa-minus"></i></button>
+                                                    <input type="number" id="username-x" value="512" data-config="welcome.image.usernameX">
+                                                    <button class="btn-icon btn-sm" data-adjust="username-x" data-delta="10"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Posição Y</label>
+                                                <div class="coord-control">
+                                                    <button class="btn-icon btn-sm" data-adjust="username-y" data-delta="-5"><i class="fas fa-minus"></i></button>
+                                                    <input type="number" id="username-y" value="340" data-config="welcome.image.usernameY">
+                                                    <button class="btn-icon btn-sm" data-adjust="username-y" data-delta="5"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tamanho da Fonte</label>
+                                            <div class="coord-control">
+                                                <button class="btn-icon btn-sm" data-adjust="username-size" data-delta="-2"><i class="fas fa-minus"></i></button>
+                                                <input type="number" id="username-size" value="42" data-config="welcome.image.usernameSize">
+                                                <button class="btn-icon btn-sm" data-adjust="username-size" data-delta="2"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Cor do Texto</label>
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="username-color" value="#ffffff" data-config="welcome.image.usernameColor">
+                                                <input type="text" class="color-hex" id="username-hex" value="#FFFFFF">
+                                                <span class="color-rgb" id="username-rgb">rgb(255,255,255)</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Fonte</label>
+                                            <select id="username-font" data-config="welcome.image.usernameFont">
+                                                <option value="Discord">Discord (GG Sans)</option>
+                                                <option value="Roboto">Roboto</option>
+                                                <option value="Open Sans">Open Sans</option>
+                                                <option value="Montserrat">Montserrat</option>
+                                                <option value="Poppins">Poppins</option>
+                                                <option value="Oswald">Oswald</option>
+                                                <option value="Bebas Neue">Bebas Neue</option>
+                                                <option value="Lato">Lato</option>
+                                                <option value="Nunito">Nunito</option>
+                                                <option value="Raleway">Raleway</option>
+                                                <option value="Playfair Display">Playfair Display</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Alinhamento</label>
+                                            <select id="username-align" data-config="welcome.image.usernameAlign">
+                                                <option value="center">Centro</option>
+                                                <option value="left">Esquerda</option>
+                                                <option value="right">Direita</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- TEXT -->
+                                    <div class="tab-content" data-content="text">
+                                        <div class="form-group">
+                                            <label>Texto Personalizado</label>
+                                            <input type="text" id="custom-text" value="BEM-VINDO AO SERVIDOR!" data-config="welcome.image.customText">
+                                        </div>
+                                        <div class="form-row compact">
+                                            <div class="form-group">
+                                                <label>Posição X</label>
+                                                <div class="coord-control">
+                                                    <button class="btn-icon btn-sm" data-adjust="text-x" data-delta="-10"><i class="fas fa-minus"></i></button>
+                                                    <input type="number" id="text-x" value="512" data-config="welcome.image.textX">
+                                                    <button class="btn-icon btn-sm" data-adjust="text-x" data-delta="10"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Posição Y</label>
+                                                <div class="coord-control">
+                                                    <button class="btn-icon btn-sm" data-adjust="text-y" data-delta="-5"><i class="fas fa-minus"></i></button>
+                                                    <input type="number" id="text-y" value="100" data-config="welcome.image.textY">
+                                                    <button class="btn-icon btn-sm" data-adjust="text-y" data-delta="5"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tamanho da Fonte</label>
+                                            <div class="coord-control">
+                                                <button class="btn-icon btn-sm" data-adjust="text-size" data-delta="-2"><i class="fas fa-minus"></i></button>
+                                                <input type="number" id="text-size" value="56" data-config="welcome.image.textSize">
+                                                <button class="btn-icon btn-sm" data-adjust="text-size" data-delta="2"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Cor do Texto</label>
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="text-color" value="#F0E130" data-config="welcome.image.textColor">
+                                                <input type="text" class="color-hex" id="text-hex" value="#F0E130">
+                                                <span class="color-rgb" id="text-rgb">rgb(240,225,48)</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Fonte</label>
+                                            <select id="text-font" data-config="welcome.image.textFont">
+                                                <option value="Bebas Neue">Bebas Neue</option>
+                                                <option value="Discord">Discord (GG Sans)</option>
+                                                <option value="Roboto">Roboto</option>
+                                                <option value="Montserrat">Montserrat</option>
+                                                <option value="Poppins">Poppins</option>
+                                                <option value="Oswald">Oswald</option>
+                                                <option value="Lato">Lato</option>
+                                                <option value="Nunito">Nunito</option>
+                                                <option value="Raleway">Raleway</option>
+                                                <option value="Playfair Display">Playfair Display</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Alinhamento</label>
+                                            <select id="text-align" data-config="welcome.image.textAlign">
+                                                <option value="center">Centro</option>
+                                                <option value="left">Esquerda</option>
+                                                <option value="right">Direita</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Layout Global -->
+                                <div class="form-group layout-selector">
+                                    <label>Layout</label>
+                                    <div class="layout-options">
+                                        <div class="layout-option active" data-layout="classic">
+                                            <div class="layout-preview classic"></div>
+                                            <span>Clássico</span>
+                                        </div>
+                                        <div class="layout-option" data-layout="textonly">
+                                            <div class="layout-preview textonly"></div>
+                                            <span>Texto</span>
+                                        </div>
+                                        <div class="layout-option" data-layout="left">
+                                            <div class="layout-preview left"></div>
+                                            <span>Esquerda</span>
+                                        </div>
+                                        <div class="layout-option" data-layout="right">
+                                            <div class="layout-preview right"></div>
+                                            <span>Direita</span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="image-layout" value="classic" data-config="welcome.image.layout">
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
-                    <!-- USERNAME -->
-                    <div class="tab-content" data-content="username">
-                        <div class="form-row compact">
+                    <!-- Mensagem de Adeus -->
+                    <div class="panel-card" style="margin-top: 20px;">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-door-closed"></i> Mensagem de Adeus</h3>
+                            <label class="switch">
+                                <input type="checkbox" id="goodbye-enabled" data-config="goodbye.enabled">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div id="goodbye-content">
                             <div class="form-group">
-                                <label>Posição X</label>
-                                <div class="coord-control">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('username-x', -10)"><i class="fas fa-minus"></i></button>
-                                    <input type="number" id="username-x" value="512" data-config="welcome.image.usernameX">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('username-x', 10)"><i class="fas fa-plus"></i></button>
+                                <label>Canal de Adeus</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="goodbye-channel" placeholder="adeus" data-config="goodbye.channelId">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Posição Y</label>
-                                <div class="coord-control">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('username-y', -5)"><i class="fas fa-minus"></i></button>
-                                    <input type="number" id="username-y" value="340" data-config="welcome.image.usernameY">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('username-y', 5)"><i class="fas fa-plus"></i></button>
+                                <label>Mensagem de Adeus</label>
+                                <textarea id="goodbye-message" rows="3" data-config="goodbye.message">Oh, o [userName] saiu do servidor 😢, faz boa viagem! Ainda restam [memberCount] membros.</textarea>
+                                <div class="variables-help">
+                                    <span class="var-tag">[user]</span>
+                                    <span class="var-tag">[userName]</span>
+                                    <span class="var-tag">[memberCount]</span>
+                                    <span class="var-tag">[server]</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Tamanho da Fonte</label>
-                            <div class="coord-control">
-                                <button class="btn-icon btn-sm" onclick="adjustValue('username-size', -2)"><i class="fas fa-minus"></i></button>
-                                <input type="number" id="username-size" value="42" data-config="welcome.image.usernameSize">
-                                <button class="btn-icon btn-sm" onclick="adjustValue('username-size', 2)"><i class="fas fa-plus"></i></button>
+                    </div>
+                </section>
+
+                <!-- MODERATION -->
+                <section id="moderation" class="content-section">
+                    <div class="section-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-shield-halved"></i> Auto-Mod</h3>
+                            </div>
+                            <div class="toggle-list">
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Anti-Spam</span>
+                                        <span class="help-text">Deteta e remove mensagens spam</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="anti-spam" data-config="moderation.antiSpam">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Anti-Link</span>
+                                        <span class="help-text">Bloqueia links não autorizados</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="anti-link" data-config="moderation.antiLink">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Anti-Mencção em Massa</span>
+                                        <span class="help-text">Bloqueia @everyone/@here abusivos</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="anti-mass-mention" data-config="moderation.antiMassMention">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Filtro de Palavrões</span>
+                                        <span class="help-text">Remove linguagem ofensiva</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="profanity-filter" data-config="moderation.profanityFilter">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Cor do Texto</label>
-                            <div class="color-picker-wrapper">
-                                <input type="color" id="username-color" value="#ffffff" data-config="welcome.image.usernameColor">
-                                <input type="text" class="color-hex" id="username-hex" value="#ffffff">
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-user-shield"></i> Cargos de Staff</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo de Mute</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">@</span>
+                                    <input type="text" id="mute-role" placeholder="ID do cargo" data-config="moderation.muteRole">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo de Staff/Mod</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">@</span>
+                                    <input type="text" id="mod-role" placeholder="ID do cargo" data-config="moderation.modRole">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo de Admin</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">@</span>
+                                    <input type="text" id="admin-role" placeholder="ID do cargo" data-config="moderation.adminRole">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Limite de Avisos (Warns)</label>
+                                    <input type="number" id="warn-limit" value="3" min="1" max="10" data-config="moderation.warnLimit">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ação após Limite</label>
+                                    <select id="warn-action" data-config="moderation.warnAction">
+                                        <option value="mute">Mute</option>
+                                        <option value="kick">Kick</option>
+                                        <option value="ban">Ban</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Fonte</label>
-                            <select id="username-font" data-config="welcome.image.usernameFont">
-                                <option value="Discord">Discord (GG Sans)</option>
-                                <option value="Roboto">Roboto</option>
-                                <option value="Open Sans">Open Sans</option>
-                                <option value="Montserrat">Montserrat</option>
-                                <option value="Poppins">Poppins</option>
-                                <option value="Oswald">Oswald</option>
-                                <option value="Bebas Neue">Bebas Neue</option>
-                            </select>
+                    </div>
+                </section>
+
+                <!-- LOGS -->
+                <section id="logs" class="content-section">
+                    <div class="section-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-file-lines"></i> Canais de Log</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Canal de Logs Geral</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="log-channel" placeholder="logs" data-config="logs.generalChannel">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Canal de Logs de Moderação</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="mod-log-channel" placeholder="mod-logs" data-config="logs.modChannel">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Canal de Logs de Entradas/Saídas</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="join-log-channel" placeholder="join-logs" data-config="logs.joinChannel">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-list-check"></i> Eventos Monitorizados</h3>
+                            </div>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-card">
+                                    <input type="checkbox" checked data-config="logs.events.messageDelete">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-trash"></i>
+                                        <span>Mensagens Apagadas</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" checked data-config="logs.events.messageEdit">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-pen"></i>
+                                        <span>Mensagens Editadas</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" checked data-config="logs.events.memberJoin">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                        <span>Entradas</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" checked data-config="logs.events.memberLeave">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-user-minus"></i>
+                                        <span>Saídas</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" data-config="logs.events.roleChange">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-id-badge"></i>
+                                        <span>Alterações de Cargos</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" data-config="logs.events.channelChange">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-hashtag"></i>
+                                        <span>Alterações de Canais</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" data-config="logs.events.voiceChange">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-microphone"></i>
+                                        <span>Atividade de Voz</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" data-config="logs.events.banUnban">
+                                    <div class="checkbox-content">
+                                        <i class="fa-solid fa-gavel"></i>
+                                        <span>Bans/Unbans</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ROLES -->
+                <section id="roles" class="content-section">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-id-badge"></i> Cargos Automáticos</h3>
                         </div>
                         <div class="form-group">
-                            <label>Alinhamento</label>
-                            <select id="username-align" data-config="welcome.image.usernameAlign">
-                                <option value="center">Centro</option>
-                                <option value="left">Esquerda</option>
-                                <option value="right">Direita</option>
-                            </select>
+                            <label>Cargo ao Entrar</label>
+                            <div class="channel-input">
+                                <span class="channel-hash">@</span>
+                                <input type="text" id="auto-role" placeholder="Membro" data-config="roles.autoRole">
+                            </div>
+                            <span class="help-text">Cargo dado automaticamente a novos membros</span>
                         </div>
                     </div>
 
-                    <!-- TEXT -->
-                    <div class="tab-content" data-content="text">
-                        <div class="form-group">
-                            <label>Texto Personalizado</label>
-                            <input type="text" id="custom-text" value="BEM-VINDO AO SERVIDOR!" data-config="welcome.image.customText">
+                    <div class="panel-card" style="margin-top: 20px;">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-hand-pointer"></i> Reaction Roles (Preview)</h3>
                         </div>
-                        <div class="form-row compact">
-                            <div class="form-group">
-                                <label>Posição X</label>
-                                <div class="coord-control">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('text-x', -10)"><i class="fas fa-minus"></i></button>
-                                    <input type="number" id="text-x" value="512" data-config="welcome.image.textX">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('text-x', 10)"><i class="fas fa-plus"></i></button>
+                        <div class="button-roles-preview">
+                            <div class="preview-message">
+                                <div class="preview-header">
+                                    <img src="https://cdn.discordapp.com/embed/avatars/0.png" class="preview-avatar" alt="Bot">
+                                    <span class="preview-name">Bot</span>
+                                    <span class="preview-bot-tag">BOT</span>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Posição Y</label>
-                                <div class="coord-control">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('text-y', -5)"><i class="fas fa-minus"></i></button>
-                                    <input type="number" id="text-y" value="100" data-config="welcome.image.textY">
-                                    <button class="btn-icon btn-sm" onclick="adjustValue('text-y', 5)"><i class="fas fa-plus"></i></button>
+                                <div class="preview-content">
+                                    <p>Escolhe os teus cargos:</p>
+                                    <div class="preview-buttons">
+                                        <button class="preview-btn">📢 Anúncios</button>
+                                        <button class="preview-btn">🎮 Gaming</button>
+                                        <button class="preview-btn">🎵 Música</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Tamanho da Fonte</label>
-                            <div class="coord-control">
-                                <button class="btn-icon btn-sm" onclick="adjustValue('text-size', -2)"><i class="fas fa-minus"></i></button>
-                                <input type="number" id="text-size" value="56" data-config="welcome.image.textSize">
-                                <button class="btn-icon btn-sm" onclick="adjustValue('text-size', 2)"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Cor do Texto</label>
-                            <div class="color-picker-wrapper">
-                                <input type="color" id="text-color" value="#F0E130" data-config="welcome.image.textColor">
-                                <input type="text" class="color-hex" id="text-hex" value="#F0E130">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Fonte</label>
-                            <select id="text-font" data-config="welcome.image.textFont">
-                                <option value="Bebas Neue">Bebas Neue</option>
-                                <option value="Discord">Discord (GG Sans)</option>
-                                <option value="Roboto">Roboto</option>
-                                <option value="Montserrat">Montserrat</option>
-                                <option value="Poppins">Poppins</option>
-                                <option value="Oswald">Oswald</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Alinhamento</label>
-                            <select id="text-align" data-config="welcome.image.textAlign">
-                                <option value="center">Centro</option>
-                                <option value="left">Esquerda</option>
-                                <option value="right">Direita</option>
-                            </select>
+                            <span class="help-text">Configuração de reaction roles será adicionada numa atualização futura.</span>
                         </div>
                     </div>
+                </section>
 
-                </div>
-
-                <!-- Layout Global -->
-                <div class="form-group layout-selector">
-                    <label>Layout</label>
-                    <div class="layout-options">
-                        <div class="layout-option active" data-layout="classic">
-                            <div class="layout-preview classic"></div>
-                            <span>Clássico</span>
+                <!-- TICKETS -->
+                <section id="tickets" class="content-section">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-ticket"></i> Sistema de Tickets</h3>
+                            <label class="switch">
+                                <input type="checkbox" id="tickets-enabled" data-config="tickets.enabled">
+                                <span class="slider"></span>
+                            </label>
                         </div>
-                        <div class="layout-option" data-layout="textonly">
-                            <div class="layout-preview textonly"></div>
-                            <span>Texto</span>
-                        </div>
-                        <div class="layout-option" data-layout="left">
-                            <div class="layout-preview left"></div>
-                            <span>Esquerda</span>
-                        </div>
-                        <div class="layout-option" data-layout="right">
-                            <div class="layout-preview right"></div>
-                            <span>Direita</span>
+                        <div id="tickets-content">
+                            <div class="form-group">
+                                <label>Categoria de Tickets</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">📁</span>
+                                    <input type="text" id="ticket-category" placeholder="ID da categoria" data-config="tickets.categoryId">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo de Suporte</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">@</span>
+                                    <input type="text" id="support-role" placeholder="ID do cargo" data-config="tickets.supportRole">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mensagem do Painel</label>
+                                <textarea id="ticket-panel-msg" rows="2" data-config="tickets.panelMessage">Clica no botão abaixo para abrir um ticket de suporte!</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Emoji do Botão</label>
+                                <input type="text" id="ticket-emoji" value="🎫" maxlength="10" data-config="tickets.buttonEmoji">
+                            </div>
+                            <div class="toggle-list">
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <span>Guardar Transcript</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="save-transcript" checked data-config="tickets.saveTranscript">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Canal de Transcripts</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="transcript-channel" placeholder="transcripts" data-config="tickets.transcriptChannel">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <input type="hidden" id="image-layout" value="classic" data-config="welcome.image.layout">
-                </div>
+                </section>
 
+                <!-- LEVELS -->
+                <section id="levels" class="content-section">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-trophy"></i> Sistema de Níveis & XP</h3>
+                            <label class="switch">
+                                <input type="checkbox" id="levels-enabled" data-config="levels.enabled">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div id="levels-content">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Multiplicador de XP</label>
+                                    <div class="range-with-value">
+                                        <input type="range" id="xp-multiplier" min="0.5" max="5" step="0.5" value="1" data-config="levels.xpMultiplier">
+                                        <span class="range-value" id="xp-multiplier-value">1x</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Cooldown (segundos)</label>
+                                    <input type="number" id="xp-cooldown" value="60" min="5" max="300" data-config="levels.cooldown">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Canal de Anúncios de Level Up</label>
+                                <div class="channel-input">
+                                    <span class="channel-hash">#</span>
+                                    <input type="text" id="level-channel" placeholder="level-up" data-config="levels.announceChannel">
+                                </div>
+                            </div>
+                            <div class="level-rewards">
+                                <div class="reward-item">
+                                    <span class="reward-level">Nível 5</span>
+                                    <span class="reward-arrow">→</span>
+                                    <div class="channel-input" style="flex:1;">
+                                        <span class="channel-hash">@</span>
+                                        <input type="text" placeholder="Cargo" data-config="levels.rewards.5">
+                                    </div>
+                                </div>
+                                <div class="reward-item">
+                                    <span class="reward-level">Nível 10</span>
+                                    <span class="reward-arrow">→</span>
+                                    <div class="channel-input" style="flex:1;">
+                                        <span class="channel-hash">@</span>
+                                        <input type="text" placeholder="Cargo" data-config="levels.rewards.10">
+                                    </div>
+                                </div>
+                                <div class="reward-item">
+                                    <span class="reward-level">Nível 25</span>
+                                    <span class="reward-arrow">→</span>
+                                    <div class="channel-input" style="flex:1;">
+                                        <span class="channel-hash">@</span>
+                                        <input type="text" placeholder="Cargo" data-config="levels.rewards.25">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- EMBED BUILDER -->
+                <section id="embed-builder" class="content-section">
+                    <div class="dashboard-grid embed-builder-grid">
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-palette"></i> Editor de Embed</h3>
+                            </div>
+                            <div class="form-group">
+                                <label>Título</label>
+                                <input type="text" id="embed-title" placeholder="Título do Embed" data-config="embed.title">
+                            </div>
+                            <div class="form-group">
+                                <label>Descrição</label>
+                                <textarea id="embed-description" rows="4" placeholder="Descrição do embed..." data-config="embed.description"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Cor</label>
+                                    <input type="color" id="embed-color" value="#5865F2" data-config="embed.color">
+                                </div>
+                                <div class="form-group">
+                                    <label>URL</label>
+                                    <input type="text" id="embed-url" placeholder="https://..." data-config="embed.url">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Thumbnail URL</label>
+                                    <input type="text" id="embed-thumbnail" placeholder="https://..." data-config="embed.thumbnail">
+                                </div>
+                                <div class="form-group">
+                                    <label>Image URL</label>
+                                    <input type="text" id="embed-image" placeholder="https://..." data-config="embed.image">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Footer</label>
+                                <input type="text" id="embed-footer" placeholder="Footer text" data-config="embed.footer">
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="embed-timestamp" data-config="embed.timestamp">
+                                    Mostrar Timestamp
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>JSON do Embed</label>
+                                <textarea id="embed-json" rows="6" readonly></textarea>
+                                <button class="btn btn-sm btn-secondary" id="copy-embed-json" style="margin-top:8px;"><i class="fa-solid fa-copy"></i> Copiar JSON</button>
+                            </div>
+                        </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-brands fa-discord"></i> Preview Discord</h3>
+                            </div>
+                            <div class="embed-preview" id="embed-preview">
+                                <div class="discord-embed">
+                                    <div class="embed-color-bar" style="background: #5865F2;"></div>
+                                    <div class="embed-content">
+                                        <div class="embed-title">Título do Embed</div>
+                                        <div class="embed-description">Descrição do embed aparece aqui...</div>
+                                        <div class="embed-footer">
+                                            <span>Footer text</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- COMMANDS -->
+                <section id="commands" class="content-section">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3><i class="fa-solid fa-terminal"></i> Comandos Personalizados</h3>
+                        </div>
+                        <div class="commands-list">
+                            <div class="command-item">
+                                <div>
+                                    <span class="command-name">/help</span>
+                                    <span class="command-desc">Mostra a lista de comandos</span>
+                                </div>
+                                <div class="command-actions">
+                                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div class="command-item">
+                                <div>
+                                    <span class="command-name">/ping</span>
+                                    <span class="command-desc">Verifica a latência do bot</span>
+                                </div>
+                                <div class="command-actions">
+                                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Save Popup -->
+    <div id="save-popup-overlay" class="save-popup" style="display: none;">
+        <div class="save-popup-content">
+            <h3><i class="fas fa-check-circle" style="color: var(--accent-success);"></i> Guardar Configurações</h3>
+            <p>As tuas alterações foram guardadas. O ficheiro <code>config.json</code> vai ser descarregado automaticamente.</p>
+            <div class="popup-buttons">
+                <button class="btn btn-secondary" id="popup-close">Fechar</button>
+                <button class="btn btn-primary" id="popup-download"><i class="fas fa-download"></i> Descarregar JSON</button>
             </div>
         </div>
     </div>
 
-    <!-- JSON Preview -->
-    <div class="panel-card" style="margin-top: 20px;">
-        <div class="panel-header">
-            <h3><i class="fas fa-code"></i> Preview do JSON</h3>
-            <button class="btn btn-sm btn-secondary" id="copy-json"><i class="fas fa-copy"></i> Copiar</button>
-        </div>
-        <div class="form-group">
-            <pre class="json-preview" id="json-preview"></pre>
-        </div>
-    </div>
-
-    <!-- Botões de Ação -->
-    <div class="action-bar">
-        <button class="btn btn-secondary" id="save-draft"><i class="fas fa-save"></i> Guardar Rascunho</button>
-        <button class="btn btn-primary" id="save-config"><i class="fas fa-download"></i> Aplicar Configurações</button>
-    </div>
-</section>
+    <script src="js/app.js"></script>
+</body>
+</html>

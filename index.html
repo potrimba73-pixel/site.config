@@ -19,6 +19,18 @@
                     <span>Bot Panel</span>
                 </div>
             </div>
+
+            <!-- Seletor de Bot -->
+            <div class="bot-selector-sidebar">
+                <label class="nav-label">Bot Ativo</label>
+                <select id="active-bot-select" class="bot-select">
+                    <option value="">-- Escolhe um bot --</option>
+                </select>
+                <button class="btn btn-sm btn-secondary btn-block" id="add-bot-btn" style="margin-top:8px;">
+                    <i class="fa-solid fa-plus"></i> Novo Bot
+                </button>
+            </div>
+
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <span class="nav-label">Principal</span>
@@ -55,7 +67,7 @@
                     </a>
                     <a href="#" class="nav-item" data-section="levels">
                         <i class="fa-solid fa-trophy"></i>
-                        <span>Níveis & XP</span>
+                        <span>Niveis & XP</span>
                     </a>
                 </div>
                 <div class="nav-section">
@@ -83,11 +95,11 @@
             <header class="top-bar">
                 <div class="page-title">
                     <h1 id="page-title">Dashboard</h1>
-                    <p id="page-subtitle">Visão geral do teu bot</p>
+                    <p id="page-subtitle">Visao geral do teu bot</p>
                 </div>
                 <div class="top-actions">
                     <button class="btn btn-secondary" id="save-draft"><i class="fa-solid fa-save"></i> Guardar Rascunho</button>
-                    <button class="btn btn-primary" id="save-config"><i class="fa-solid fa-download"></i> Aplicar Configurações</button>
+                    <button class="btn btn-primary" id="save-config"><i class="fa-solid fa-download"></i> Aplicar Configuracoes</button>
                 </div>
             </header>
 
@@ -137,7 +149,7 @@
                     <div class="dashboard-grid">
                         <div class="panel-card">
                             <div class="panel-header">
-                                <h3><i class="fa-solid fa-circle-info"></i> Estado da Configuração</h3>
+                                <h3><i class="fa-solid fa-circle-info"></i> Estado da Configuracao</h3>
                             </div>
                             <div class="config-status-list">
                                 <div class="config-status-item">
@@ -145,7 +157,7 @@
                                         <i class="fa-solid fa-key"></i>
                                         <span>Bot Token</span>
                                     </div>
-                                    <span class="status-badge" id="status-bot">Não configurado</span>
+                                    <span class="status-badge" id="status-bot">Nao configurado</span>
                                 </div>
                                 <div class="config-status-item">
                                     <div class="status-info">
@@ -166,7 +178,7 @@
                                         <i class="fa-solid fa-file-lines"></i>
                                         <span>Canal de Logs</span>
                                     </div>
-                                    <span class="status-badge" id="status-logs">Não definido</span>
+                                    <span class="status-badge" id="status-logs">Nao definido</span>
                                 </div>
                                 <div class="config-status-item">
                                     <div class="status-info">
@@ -198,36 +210,40 @@
                                 <h3><i class="fa-solid fa-key"></i> Credenciais do Bot</h3>
                             </div>
                             <div class="form-group">
+                                <label>Nome do Bot</label>
+                                <input type="text" id="bot-name" placeholder="Meu Bot" data-config="bot.name">
+                            </div>
+                            <div class="form-group">
                                 <label>Bot Token <span class="required">*</span></label>
                                 <div class="input-with-icon">
                                     <input type="password" id="bot-token" placeholder="Insere o token do teu bot" data-config="bot.token">
                                     <button class="toggle-password" type="button"><i class="fa-solid fa-eye"></i></button>
                                 </div>
-                                <span class="help-text">O token secreto do teu bot Discord. Não partilhes!</span>
+                                <span class="help-text">O token secreto do teu bot Discord. Nao partilhes!</span>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label>Client ID <span class="required">*</span></label>
-                                    <input type="text" id="client-id" placeholder="ID da aplicação Discord" data-config="bot.clientId">
+                                    <input type="text" id="client-id" placeholder="ID da aplicacao Discord" data-config="bot.clientId">
                                 </div>
                                 <div class="form-group">
                                     <label>Guild ID (Servidor)</label>
-                                    <input type="text" id="guild-id" placeholder="ID do servidor principal (opcional)" data-config="bot.guildId">
+                                    <input type="text" id="guild-id" placeholder="ID do servidor principal" data-config="bot.guildId">
                                 </div>
                             </div>
                         </div>
 
                         <div class="panel-card">
                             <div class="panel-header">
-                                <h3><i class="fa-solid fa-sliders"></i> Opções Gerais</h3>
+                                <h3><i class="fa-solid fa-sliders"></i> Opcoes Gerais</h3>
                             </div>
                             <div class="form-group">
                                 <label>Status do Bot</label>
                                 <select id="bot-status" data-config="bot.statusType">
                                     <option value="online">Online</option>
                                     <option value="idle">Ausente</option>
-                                    <option value="dnd">Não Perturbar</option>
-                                    <option value="invisible">Invisível</option>
+                                    <option value="dnd">Nao Perturbar</option>
+                                    <option value="invisible">Invisivel</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -309,7 +325,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Mensagem de Boas-vindas</label>
-                                    <textarea id="welcome-message" rows="4" data-config="welcome.message">Entrou um novo membro, [user]! Diverte-te connosco, mas segue as regras! Agora há [memberCount] membros! 👍</textarea>
+                                    <textarea id="welcome-message" rows="4" data-config="welcome.message">Entrou um novo membro, [user]! Diverte-te connosco, mas segue as regras! Agora ha [memberCount] membros!</textarea>
                                     <div class="variables-help">
                                         <span class="var-tag">[user]</span>
                                         <span class="var-tag">[userName]</span>
@@ -318,10 +334,17 @@
                                         <span class="var-tag">[inviter]</span>
                                     </div>
                                 </div>
+                                <!-- Botao de Teste -->
+                                <div class="form-group test-buttons">
+                                    <button class="btn btn-warning" id="test-welcome-btn">
+                                        <i class="fa-solid fa-paper-plane"></i> Testar Boas-vindas
+                                    </button>
+                                    <span class="help-text">Envia uma mensagem de teste para o canal configurado</span>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Imagem de Boas-vindas (ProBot Style) -->
+                        <!-- Imagem de Boas-vindas -->
                         <div class="panel-card">
                             <div class="panel-header">
                                 <h3><i class="fa-solid fa-image"></i> Imagem de Boas-vindas</h3>
@@ -332,7 +355,6 @@
                             </div>
                             <div id="welcome-image-config" style="display: none;">
 
-                                <!-- Tabs -->
                                 <div class="image-tabs">
                                     <button class="tab-btn active" data-tab="background">Imagem de fundo</button>
                                     <button class="tab-btn" data-tab="avatar">Avatar</button>
@@ -340,16 +362,13 @@
                                     <button class="tab-btn" data-tab="text">Texto</button>
                                 </div>
 
-                                <!-- Canvas Preview -->
                                 <div class="welcome-canvas-wrapper">
                                     <canvas id="welcome-canvas" width="1024" height="450"></canvas>
                                     <div class="canvas-loading" id="canvas-loading">A carregar preview...</div>
                                 </div>
 
-                                <!-- Tab Contents -->
                                 <div class="tab-contents">
 
-                                    <!-- BACKGROUND -->
                                     <div class="tab-content active" data-content="background">
                                         <div class="form-group">
                                             <label>URL da Imagem de Fundo</label>
@@ -388,11 +407,10 @@
                                         </div>
                                     </div>
 
-                                    <!-- AVATAR -->
                                     <div class="tab-content" data-content="avatar">
                                         <div class="form-row compact">
                                             <div class="form-group">
-                                                <label>Posição X</label>
+                                                <label>Posicao X</label>
                                                 <div class="coord-control">
                                                     <button class="btn-icon btn-sm" data-adjust="avatar-x" data-delta="-10"><i class="fas fa-minus"></i></button>
                                                     <input type="number" id="avatar-x" value="512" data-config="welcome.image.avatarX">
@@ -400,7 +418,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label>Posição Y</label>
+                                                <label>Posicao Y</label>
                                                 <div class="coord-control">
                                                     <button class="btn-icon btn-sm" data-adjust="avatar-y" data-delta="-10"><i class="fas fa-minus"></i></button>
                                                     <input type="number" id="avatar-y" value="180" data-config="welcome.image.avatarY">
@@ -420,7 +438,7 @@
                                             <div class="form-group">
                                                 <label>Forma</label>
                                                 <select id="avatar-shape" data-config="welcome.image.avatarShape">
-                                                    <option value="circle">Círculo</option>
+                                                    <option value="circle">Circulo</option>
                                                     <option value="square">Quadrado</option>
                                                     <option value="rounded">Cantos Arredondados</option>
                                                 </select>
@@ -443,11 +461,10 @@
                                         </div>
                                     </div>
 
-                                    <!-- USERNAME -->
                                     <div class="tab-content" data-content="username">
                                         <div class="form-row compact">
                                             <div class="form-group">
-                                                <label>Posição X</label>
+                                                <label>Posicao X</label>
                                                 <div class="coord-control">
                                                     <button class="btn-icon btn-sm" data-adjust="username-x" data-delta="-10"><i class="fas fa-minus"></i></button>
                                                     <input type="number" id="username-x" value="512" data-config="welcome.image.usernameX">
@@ -455,7 +472,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label>Posição Y</label>
+                                                <label>Posicao Y</label>
                                                 <div class="coord-control">
                                                     <button class="btn-icon btn-sm" data-adjust="username-y" data-delta="-5"><i class="fas fa-minus"></i></button>
                                                     <input type="number" id="username-y" value="340" data-config="welcome.image.usernameY">
@@ -505,7 +522,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- TEXT -->
                                     <div class="tab-content" data-content="text">
                                         <div class="form-group">
                                             <label>Texto Personalizado</label>
@@ -513,7 +529,7 @@
                                         </div>
                                         <div class="form-row compact">
                                             <div class="form-group">
-                                                <label>Posição X</label>
+                                                <label>Posicao X</label>
                                                 <div class="coord-control">
                                                     <button class="btn-icon btn-sm" data-adjust="text-x" data-delta="-10"><i class="fas fa-minus"></i></button>
                                                     <input type="number" id="text-x" value="512" data-config="welcome.image.textX">
@@ -521,7 +537,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label>Posição Y</label>
+                                                <label>Posicao Y</label>
                                                 <div class="coord-control">
                                                     <button class="btn-icon btn-sm" data-adjust="text-y" data-delta="-5"><i class="fas fa-minus"></i></button>
                                                     <input type="number" id="text-y" value="100" data-config="welcome.image.textY">
@@ -572,13 +588,12 @@
 
                                 </div>
 
-                                <!-- Layout Global -->
                                 <div class="form-group layout-selector">
                                     <label>Layout</label>
                                     <div class="layout-options">
                                         <div class="layout-option active" data-layout="classic">
                                             <div class="layout-preview classic"></div>
-                                            <span>Clássico</span>
+                                            <span>Classico</span>
                                         </div>
                                         <div class="layout-option" data-layout="textonly">
                                             <div class="layout-preview textonly"></div>
@@ -596,11 +611,19 @@
                                     <input type="hidden" id="image-layout" value="classic" data-config="welcome.image.layout">
                                 </div>
 
+                                <!-- Botao Testar Imagem -->
+                                <div class="form-group test-buttons">
+                                    <button class="btn btn-warning" id="test-welcome-image-btn">
+                                        <i class="fa-solid fa-image"></i> Testar Imagem no Canal
+                                    </button>
+                                    <span class="help-text">Envia a imagem de boas-vindas como teste</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
-                    <!-- Mensagem de Adeus -->
+                    <!-- Mensagem de Adeus com Imagem -->
                     <div class="panel-card" style="margin-top: 20px;">
                         <div class="panel-header">
                             <h3><i class="fa-solid fa-door-closed"></i> Mensagem de Adeus</h3>
@@ -619,13 +642,57 @@
                             </div>
                             <div class="form-group">
                                 <label>Mensagem de Adeus</label>
-                                <textarea id="goodbye-message" rows="3" data-config="goodbye.message">Oh, o [userName] saiu do servidor 😢, faz boa viagem! Ainda restam [memberCount] membros.</textarea>
+                                <textarea id="goodbye-message" rows="3" data-config="goodbye.message">Oh, o [userName] saiu do servidor, faz boa viagem! Ainda restam [memberCount] membros.</textarea>
                                 <div class="variables-help">
                                     <span class="var-tag">[user]</span>
                                     <span class="var-tag">[userName]</span>
                                     <span class="var-tag">[memberCount]</span>
                                     <span class="var-tag">[server]</span>
                                 </div>
+                            </div>
+
+                            <!-- Imagem de Adeus -->
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="goodbye-image-enabled" data-config="goodbye.imageEnabled">
+                                    Enviar imagem de adeus
+                                </label>
+                            </div>
+                            <div id="goodbye-image-config" style="display: none; padding: 0 20px 16px;">
+                                <div class="form-group">
+                                    <label>URL da Imagem de Fundo</label>
+                                    <input type="text" id="goodbye-bg-url" placeholder="https://..." data-config="goodbye.image.backgroundUrl">
+                                </div>
+                                <div class="goodbye-canvas-wrapper">
+                                    <canvas id="goodbye-canvas" width="1024" height="450"></canvas>
+                                </div>
+                                <div class="form-group">
+                                    <label>Texto de Adeus</label>
+                                    <input type="text" id="goodbye-custom-text" value="ATE A PROXIMA!" data-config="goodbye.image.customText">
+                                </div>
+                                <div class="form-row compact">
+                                    <div class="form-group">
+                                        <label>Cor do Texto</label>
+                                        <div class="color-picker-wrapper">
+                                            <input type="color" id="goodbye-text-color" value="#ED4245" data-config="goodbye.image.textColor">
+                                            <input type="text" class="color-hex" id="goodbye-text-hex" value="#ED4245">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tamanho</label>
+                                        <div class="coord-control">
+                                            <button class="btn-icon btn-sm" data-adjust="goodbye-text-size" data-delta="-2"><i class="fas fa-minus"></i></button>
+                                            <input type="number" id="goodbye-text-size" value="48" data-config="goodbye.image.textSize">
+                                            <button class="btn-icon btn-sm" data-adjust="goodbye-text-size" data-delta="2"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group test-buttons">
+                                <button class="btn btn-warning" id="test-goodbye-btn">
+                                    <i class="fa-solid fa-paper-plane"></i> Testar Adeus
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -652,7 +719,7 @@
                                 <div class="toggle-item">
                                     <div class="toggle-info">
                                         <span>Anti-Link</span>
-                                        <span class="help-text">Bloqueia links não autorizados</span>
+                                        <span class="help-text">Bloqueia links nao autorizados</span>
                                     </div>
                                     <label class="switch">
                                         <input type="checkbox" id="anti-link" data-config="moderation.antiLink">
@@ -671,7 +738,7 @@
                                 </div>
                                 <div class="toggle-item">
                                     <div class="toggle-info">
-                                        <span>Filtro de Palavrões</span>
+                                        <span>Filtro de Palavroes</span>
                                         <span class="help-text">Remove linguagem ofensiva</span>
                                     </div>
                                     <label class="switch">
@@ -713,7 +780,7 @@
                                     <input type="number" id="warn-limit" value="3" min="1" max="10" data-config="moderation.warnLimit">
                                 </div>
                                 <div class="form-group">
-                                    <label>Ação após Limite</label>
+                                    <label>Acao apos Limite</label>
                                     <select id="warn-action" data-config="moderation.warnAction">
                                         <option value="mute">Mute</option>
                                         <option value="kick">Kick</option>
@@ -740,14 +807,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Canal de Logs de Moderação</label>
+                                <label>Canal de Logs de Moderacao</label>
                                 <div class="channel-input">
                                     <span class="channel-hash">#</span>
                                     <input type="text" id="mod-log-channel" placeholder="mod-logs" data-config="logs.modChannel">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Canal de Logs de Entradas/Saídas</label>
+                                <label>Canal de Logs de Entradas/Saidas</label>
                                 <div class="channel-input">
                                     <span class="channel-hash">#</span>
                                     <input type="text" id="join-log-channel" placeholder="join-logs" data-config="logs.joinChannel">
@@ -785,21 +852,21 @@
                                     <input type="checkbox" checked data-config="logs.events.memberLeave">
                                     <div class="checkbox-content">
                                         <i class="fa-solid fa-user-minus"></i>
-                                        <span>Saídas</span>
+                                        <span>Saidas</span>
                                     </div>
                                 </label>
                                 <label class="checkbox-card">
                                     <input type="checkbox" data-config="logs.events.roleChange">
                                     <div class="checkbox-content">
                                         <i class="fa-solid fa-id-badge"></i>
-                                        <span>Alterações de Cargos</span>
+                                        <span>Alteracoes de Cargos</span>
                                     </div>
                                 </label>
                                 <label class="checkbox-card">
                                     <input type="checkbox" data-config="logs.events.channelChange">
                                     <div class="checkbox-content">
                                         <i class="fa-solid fa-hashtag"></i>
-                                        <span>Alterações de Canais</span>
+                                        <span>Alteracoes de Canais</span>
                                     </div>
                                 </label>
                                 <label class="checkbox-card">
@@ -825,7 +892,7 @@
                 <section id="roles" class="content-section">
                     <div class="panel-card">
                         <div class="panel-header">
-                            <h3><i class="fa-solid fa-id-badge"></i> Cargos Automáticos</h3>
+                            <h3><i class="fa-solid fa-id-badge"></i> Cargos Automaticos</h3>
                         </div>
                         <div class="form-group">
                             <label>Cargo ao Entrar</label>
@@ -851,15 +918,15 @@
                                 <div class="preview-content">
                                     <p>Escolhe os teus cargos:</p>
                                     <div class="preview-buttons">
-                                        <button class="preview-btn">📢 Anúncios</button>
-                                        <button class="preview-btn">🎮 Gaming</button>
-                                        <button class="preview-btn">🎵 Música</button>
+                                        <button class="preview-btn">Anuncios</button>
+                                        <button class="preview-btn">Gaming</button>
+                                        <button class="preview-btn">Musica</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <span class="help-text">Configuração de reaction roles será adicionada numa atualização futura.</span>
+                            <span class="help-text">Configuracao de reaction roles sera adicionada numa atualizacao futura.</span>
                         </div>
                     </div>
                 </section>
@@ -891,10 +958,10 @@
                             </div>
                             <div class="form-group">
                                 <label>Mensagem do Painel</label>
-                                <textarea id="ticket-panel-msg" rows="2" data-config="tickets.panelMessage">Clica no botão abaixo para abrir um ticket de suporte!</textarea>
+                                <textarea id="ticket-panel-msg" rows="2" data-config="tickets.panelMessage">Clica no botao abaixo para abrir um ticket de suporte!</textarea>
                             </div>
                             <div class="form-group">
-                                <label>Emoji do Botão</label>
+                                <label>Emoji do Botao</label>
                                 <input type="text" id="ticket-emoji" value="🎫" maxlength="10" data-config="tickets.buttonEmoji">
                             </div>
                             <div class="toggle-list">
@@ -923,7 +990,7 @@
                 <section id="levels" class="content-section">
                     <div class="panel-card">
                         <div class="panel-header">
-                            <h3><i class="fa-solid fa-trophy"></i> Sistema de Níveis & XP</h3>
+                            <h3><i class="fa-solid fa-trophy"></i> Sistema de Niveis & XP</h3>
                             <label class="switch">
                                 <input type="checkbox" id="levels-enabled" data-config="levels.enabled">
                                 <span class="slider"></span>
@@ -944,7 +1011,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Canal de Anúncios de Level Up</label>
+                                <label>Canal de Anuncios de Level Up</label>
                                 <div class="channel-input">
                                     <span class="channel-hash">#</span>
                                     <input type="text" id="level-channel" placeholder="level-up" data-config="levels.announceChannel">
@@ -952,7 +1019,7 @@
                             </div>
                             <div class="level-rewards">
                                 <div class="reward-item">
-                                    <span class="reward-level">Nível 5</span>
+                                    <span class="reward-level">Nivel 5</span>
                                     <span class="reward-arrow">→</span>
                                     <div class="channel-input" style="flex:1;">
                                         <span class="channel-hash">@</span>
@@ -960,7 +1027,7 @@
                                     </div>
                                 </div>
                                 <div class="reward-item">
-                                    <span class="reward-level">Nível 10</span>
+                                    <span class="reward-level">Nivel 10</span>
                                     <span class="reward-arrow">→</span>
                                     <div class="channel-input" style="flex:1;">
                                         <span class="channel-hash">@</span>
@@ -968,7 +1035,7 @@
                                     </div>
                                 </div>
                                 <div class="reward-item">
-                                    <span class="reward-level">Nível 25</span>
+                                    <span class="reward-level">Nivel 25</span>
                                     <span class="reward-arrow">→</span>
                                     <div class="channel-input" style="flex:1;">
                                         <span class="channel-hash">@</span>
@@ -988,12 +1055,12 @@
                                 <h3><i class="fa-solid fa-palette"></i> Editor de Embed</h3>
                             </div>
                             <div class="form-group">
-                                <label>Título</label>
-                                <input type="text" id="embed-title" placeholder="Título do Embed" data-config="embed.title">
+                                <label>Titulo</label>
+                                <input type="text" id="embed-title" placeholder="Titulo do Embed" data-config="embed.title">
                             </div>
                             <div class="form-group">
-                                <label>Descrição</label>
-                                <textarea id="embed-description" rows="4" placeholder="Descrição do embed..." data-config="embed.description"></textarea>
+                                <label>Descricao</label>
+                                <textarea id="embed-description" rows="4" placeholder="Descricao..." data-config="embed.description"></textarea>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
@@ -1017,7 +1084,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Footer</label>
-                                <input type="text" id="embed-footer" placeholder="Footer text" data-config="embed.footer">
+                                <input type="text" id="embed-footer" placeholder="Footer" data-config="embed.footer">
                             </div>
                             <div class="form-group">
                                 <label class="checkbox-label">
@@ -1040,10 +1107,10 @@
                                 <div class="discord-embed">
                                     <div class="embed-color-bar" style="background: #5865F2;"></div>
                                     <div class="embed-content">
-                                        <div class="embed-title">Título do Embed</div>
-                                        <div class="embed-description">Descrição do embed aparece aqui...</div>
+                                        <div class="embed-title">Titulo do Embed</div>
+                                        <div class="embed-description">Descricao do embed aparece aqui...</div>
                                         <div class="embed-footer">
-                                            <span>Footer text</span>
+                                            <span>Footer</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1072,7 +1139,7 @@
                             <div class="command-item">
                                 <div>
                                     <span class="command-name">/ping</span>
-                                    <span class="command-desc">Verifica a latência do bot</span>
+                                    <span class="command-desc">Verifica a latencia do bot</span>
                                 </div>
                                 <div class="command-actions">
                                     <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
@@ -1093,11 +1160,41 @@
     <!-- Save Popup -->
     <div id="save-popup-overlay" class="save-popup" style="display: none;">
         <div class="save-popup-content">
-            <h3><i class="fas fa-check-circle" style="color: var(--accent-success);"></i> Guardar Configurações</h3>
-            <p>As tuas alterações foram guardadas. O ficheiro <code>config.json</code> vai ser descarregado automaticamente.</p>
+            <h3><i class="fas fa-check-circle" style="color: var(--accent-success);"></i> Guardar Configuracoes</h3>
+            <p>As tuas alteracoes foram guardadas. Escolhe como queres guardar:</p>
             <div class="popup-buttons">
                 <button class="btn btn-secondary" id="popup-close">Fechar</button>
                 <button class="btn btn-primary" id="popup-download"><i class="fas fa-download"></i> Descarregar JSON</button>
+            </div>
+            <div class="popup-buttons" style="margin-top: 10px;">
+                <button class="btn btn-warning" id="popup-api-save"><i class="fas fa-cloud"></i> Guardar na API</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Novo Bot -->
+    <div id="add-bot-modal" class="save-popup" style="display: none;">
+        <div class="save-popup-content">
+            <h3><i class="fas fa-robot" style="color: var(--accent-primary);"></i> Adicionar Novo Bot</h3>
+            <div class="form-group">
+                <label>Nome do Bot</label>
+                <input type="text" id="new-bot-name" placeholder="Meu Bot">
+            </div>
+            <div class="form-group">
+                <label>Bot Token</label>
+                <input type="password" id="new-bot-token" placeholder="Token do bot">
+            </div>
+            <div class="form-group">
+                <label>Client ID</label>
+                <input type="text" id="new-bot-clientid" placeholder="ID da aplicacao">
+            </div>
+            <div class="form-group">
+                <label>Guild ID (Servidor)</label>
+                <input type="text" id="new-bot-guildid" placeholder="ID do servidor">
+            </div>
+            <div class="popup-buttons">
+                <button class="btn btn-secondary" id="modal-cancel">Cancelar</button>
+                <button class="btn btn-primary" id="modal-add-bot"><i class="fas fa-plus"></i> Adicionar</button>
             </div>
         </div>
     </div>

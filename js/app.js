@@ -1,114 +1,193 @@
-// ===== CONFIGURAÇÃO INICIAL =====
-const config = {
-    bot: {
-        token: '',
-        clientId: '',
-        guildId: '',
-        statusType: 'online',
-        statusText: '',
-        prefix: '!',
-        slashCommands: true,
-        dmCommands: false,
-        debug: false
-    },
-    welcome: {
-        enabled: false,
-        sendType: 'channel',
-        channelId: '',
-        message: 'Entrou um novo membro, [user]! Diverte-te connosco, mas segue as regras! Agora há [memberCount] membros! 👍',
-        imageEnabled: false,
-        image: {
-            backgroundUrl: 'https://probot.media/muc2fw4ibY.png',
-            overlayOpacity: 50,
-            avatarX: 512,
-            avatarY: 180,
-            avatarSize: 140,
-            avatarShape: 'circle',
-            avatarBorder: 6,
-            avatarBorderColor: '#ffffff',
-            usernameX: 512,
-            usernameY: 340,
-            usernameSize: 42,
-            usernameColor: '#ffffff',
-            usernameFont: 'Discord',
-            usernameAlign: 'center',
-            customText: 'BEM-VINDO AO SERVIDOR!',
-            textX: 512,
-            textY: 100,
-            textSize: 56,
-            textColor: '#F0E130',
-            textFont: 'Bebas Neue',
-            textAlign: 'center',
-            layout: 'classic'
+// ===== MULTI-BOT STORAGE =====
+// Cada bot tem o seu proprio config guardado no localStorage
+let bots = JSON.parse(localStorage.getItem('botpanel_bots') || '[]');
+let activeBotId = localStorage.getItem('botpanel_active_bot') || null;
+
+// Config atual do bot ativo
+let config = createDefaultConfig();
+
+function createDefaultConfig() {
+    return {
+        bot: {
+            name: '',
+            token: '',
+            clientId: '',
+            guildId: '',
+            statusType: 'online',
+            statusText: '',
+            prefix: '!',
+            slashCommands: true,
+            dmCommands: false,
+            debug: false
+        },
+        welcome: {
+            enabled: false,
+            sendType: 'channel',
+            channelId: '',
+            message: 'Entrou um novo membro, [user]! Diverte-te connosco, mas segue as regras! Agora ha [memberCount] membros!',
+            imageEnabled: false,
+            image: {
+                backgroundUrl: 'https://probot.media/muc2fw4ibY.png',
+                overlayOpacity: 50,
+                avatarX: 512,
+                avatarY: 180,
+                avatarSize: 140,
+                avatarShape: 'circle',
+                avatarBorder: 6,
+                avatarBorderColor: '#ffffff',
+                usernameX: 512,
+                usernameY: 340,
+                usernameSize: 42,
+                usernameColor: '#ffffff',
+                usernameFont: 'Discord',
+                usernameAlign: 'center',
+                customText: 'BEM-VINDO AO SERVIDOR!',
+                textX: 512,
+                textY: 100,
+                textSize: 56,
+                textColor: '#F0E130',
+                textFont: 'Bebas Neue',
+                textAlign: 'center',
+                layout: 'classic'
+            }
+        },
+        goodbye: {
+            enabled: false,
+            channelId: '',
+            message: 'Oh, o [userName] saiu do servidor, faz boa viagem! Ainda restam [memberCount] membros.',
+            imageEnabled: false,
+            image: {
+                backgroundUrl: 'https://probot.media/muc2fw4ibY.png',
+                overlayOpacity: 50,
+                customText: 'ATE A PROXIMA!',
+                textColor: '#ED4245',
+                textSize: 48,
+                textX: 512,
+                textY: 225,
+                textAlign: 'center',
+                textFont: 'Bebas Neue',
+                avatarX: 512,
+                avatarY: 180,
+                avatarSize: 140,
+                avatarShape: 'circle',
+                avatarBorder: 6,
+                avatarBorderColor: '#ffffff'
+            }
+        },
+        moderation: {
+            antiSpam: false,
+            antiLink: false,
+            antiMassMention: false,
+            profanityFilter: false,
+            muteRole: '',
+            modRole: '',
+            adminRole: '',
+            warnLimit: 3,
+            warnAction: 'mute'
+        },
+        logs: {
+            generalChannel: '',
+            modChannel: '',
+            joinChannel: '',
+            events: {
+                messageDelete: true,
+                messageEdit: true,
+                memberJoin: true,
+                memberLeave: true,
+                roleChange: false,
+                channelChange: false,
+                voiceChange: false,
+                banUnban: false
+            }
+        },
+        roles: {
+            autoRole: ''
+        },
+        tickets: {
+            enabled: false,
+            categoryId: '',
+            supportRole: '',
+            panelMessage: 'Clica no botao abaixo para abrir um ticket de suporte!',
+            buttonEmoji: '🎫',
+            saveTranscript: true,
+            transcriptChannel: ''
+        },
+        levels: {
+            enabled: false,
+            xpMultiplier: 1,
+            cooldown: 60,
+            announceChannel: '',
+            rewards: {
+                5: '',
+                10: '',
+                25: ''
+            }
         }
-    },
-    goodbye: {
-        enabled: false,
-        channelId: '',
-        message: 'Oh, o [userName] saiu do servidor 😢, faz boa viagem! Ainda restam [memberCount] membros.'
-    },
-    moderation: {
-        antiSpam: false,
-        antiLink: false,
-        antiMassMention: false,
-        profanityFilter: false,
-        muteRole: '',
-        modRole: '',
-        adminRole: '',
-        warnLimit: 3,
-        warnAction: 'mute'
-    },
-    logs: {
-        generalChannel: '',
-        modChannel: '',
-        joinChannel: '',
-        events: {
-            messageDelete: true,
-            messageEdit: true,
-            memberJoin: true,
-            memberLeave: true,
-            roleChange: false,
-            channelChange: false,
-            voiceChange: false,
-            banUnban: false
-        }
-    },
-    roles: {
-        autoRole: ''
-    },
-    tickets: {
-        enabled: false,
-        categoryId: '',
-        supportRole: '',
-        panelMessage: 'Clica no botão abaixo para abrir um ticket de suporte!',
-        buttonEmoji: '🎫',
-        saveTranscript: true,
-        transcriptChannel: ''
-    },
-    levels: {
-        enabled: false,
-        xpMultiplier: 1,
-        cooldown: 60,
-        announceChannel: '',
-        rewards: {
-            5: '',
-            10: '',
-            25: ''
-        }
+    };
+}
+
+// ===== BOT MANAGEMENT =====
+function saveBot(botId, botData) {
+    const existing = bots.find(b => b.id === botId);
+    if (existing) {
+        Object.assign(existing, botData);
+    } else {
+        bots.push({ id: botId, ...botData });
     }
-};
+    localStorage.setItem('botpanel_bots', JSON.stringify(bots));
+}
+
+function deleteBot(botId) {
+    bots = bots.filter(b => b.id !== botId);
+    localStorage.setItem('botpanel_bots', JSON.stringify(bots));
+    localStorage.removeItem(`botpanel_config_${botId}`);
+}
+
+function loadBot(botId) {
+    const saved = localStorage.getItem(`botpanel_config_${botId}`);
+    if (saved) {
+        try {
+            config = JSON.parse(saved);
+        } catch (e) {
+            config = createDefaultConfig();
+        }
+    } else {
+        config = createDefaultConfig();
+    }
+    activeBotId = botId;
+    localStorage.setItem('botpanel_active_bot', botId);
+}
+
+function saveActiveBot() {
+    if (activeBotId) {
+        localStorage.setItem(`botpanel_config_${activeBotId}`, JSON.stringify(config));
+    }
+}
+
+function updateBotSelector() {
+    const select = document.getElementById('active-bot-select');
+    if (!select) return;
+    select.innerHTML = '<option value="">-- Escolhe um bot --</option>';
+    bots.forEach(bot => {
+        const option = document.createElement('option');
+        option.value = bot.id;
+        option.textContent = bot.name || `Bot ${bot.id.slice(0, 8)}`;
+        if (bot.id === activeBotId) option.selected = true;
+        select.appendChild(option);
+    });
+}
 
 // ===== API CONFIG =====
 const API_URL = window.location.hostname.includes('localhost') 
     ? 'http://localhost:3000/api' 
-    : 'https://bot-panel-api.onrender.com/api';  // ALTERA ISTO para o teu URL
+    : 'https://bot-panel-api.onrender.com/api';
 
 // ===== DOM ELEMENTS =====
 const sidebarItems = document.querySelectorAll('.nav-item');
 const contentSections = document.querySelectorAll('.content-section');
 const toastContainer = document.getElementById('toast-container');
 
-// ===== NAVEGAÇÃO =====
+// ===== NAVEGACAO =====
 sidebarItems.forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
@@ -123,14 +202,14 @@ sidebarItems.forEach(item => {
 
 function updatePageTitle(section) {
     const titles = {
-        dashboard: { title: 'Dashboard', subtitle: 'Visão geral do teu bot' },
+        dashboard: { title: 'Dashboard', subtitle: 'Visao geral do teu bot' },
         'bot-config': { title: 'Bot & Tokens', subtitle: 'Configura as credenciais do bot' },
-        welcome: { title: 'Boas-vindas & Adeus', subtitle: 'Configura mensagens de entrada e saída' },
-        moderation: { title: 'Moderação', subtitle: 'Ferramentas de moderação automática' },
+        welcome: { title: 'Boas-vindas & Adeus', subtitle: 'Configura mensagens de entrada e saida' },
+        moderation: { title: 'Moderacao', subtitle: 'Ferramentas de moderacao automatica' },
         logs: { title: 'Logs', subtitle: 'Configura canais e eventos de log' },
-        roles: { title: 'Cargos Auto', subtitle: 'Cargos automáticos e reaction roles' },
+        roles: { title: 'Cargos Auto', subtitle: 'Cargos automaticos e reaction roles' },
         tickets: { title: 'Tickets', subtitle: 'Sistema de suporte por tickets' },
-        levels: { title: 'Níveis & XP', subtitle: 'Sistema de progressão de membros' },
+        levels: { title: 'Niveis & XP', subtitle: 'Sistema de progressao de membros' },
         'embed-builder': { title: 'Embed Builder', subtitle: 'Cria embeds personalizados' },
         commands: { title: 'Comandos', subtitle: 'Gerencia comandos personalizados' }
     };
@@ -165,6 +244,7 @@ function toggleSection(checkboxId, contentId) {
         updateConfigFromInput(checkbox);
         updateJSONPreview();
         updateStatusBadges();
+        saveActiveBot();
     });
     if (!checkbox.checked) {
         content.style.opacity = '0.5';
@@ -177,6 +257,19 @@ toggleSection('goodbye-enabled', 'goodbye-content');
 toggleSection('tickets-enabled', 'tickets-content');
 toggleSection('levels-enabled', 'levels-content');
 
+// ===== GOODBYE IMAGE TOGGLE =====
+const goodbyeImageCheckbox = document.getElementById('goodbye-image-enabled');
+const goodbyeImageConfig = document.getElementById('goodbye-image-config');
+if (goodbyeImageCheckbox && goodbyeImageConfig) {
+    goodbyeImageCheckbox.addEventListener('change', () => {
+        goodbyeImageConfig.style.display = goodbyeImageCheckbox.checked ? 'block' : 'none';
+        config.goodbye.imageEnabled = goodbyeImageCheckbox.checked;
+        if (goodbyeImageCheckbox.checked) setTimeout(renderGoodbyeCanvas, 100);
+        updateJSONPreview();
+        saveActiveBot();
+    });
+}
+
 // ===== WELCOME IMAGE TOGGLE =====
 const welcomeImageCheckbox = document.getElementById('welcome-image-enabled');
 const welcomeImageSection = document.getElementById('welcome-image-config');
@@ -186,6 +279,7 @@ if (welcomeImageCheckbox && welcomeImageSection) {
         config.welcome.imageEnabled = welcomeImageCheckbox.checked;
         if (welcomeImageCheckbox.checked) setTimeout(renderWelcomeCanvas, 100);
         updateJSONPreview();
+        saveActiveBot();
     });
 }
 
@@ -209,6 +303,7 @@ document.querySelectorAll('.bg-thumb').forEach(thumb => {
         config.welcome.image.backgroundUrl = thumb.dataset.url;
         renderWelcomeCanvas();
         updateJSONPreview();
+        saveActiveBot();
     });
 });
 
@@ -216,6 +311,7 @@ document.getElementById('bg-image-url')?.addEventListener('input', function() {
     config.welcome.image.backgroundUrl = this.value;
     renderWelcomeCanvas();
     updateJSONPreview();
+    saveActiveBot();
 });
 
 // ===== OVERLAY =====
@@ -227,6 +323,7 @@ if (overlaySlider && overlayValue) {
         overlayValue.textContent = overlaySlider.value + '%';
         renderWelcomeCanvas();
         updateJSONPreview();
+        saveActiveBot();
     });
 }
 
@@ -244,34 +341,62 @@ document.querySelectorAll('[data-adjust]').forEach(btn => {
 });
 
 // ===== INPUT SYNC =====
-function syncInputToConfig(id, key, type = 'string') {
+function syncInputToConfig(id, key, type = 'string', section = 'welcome.image') {
     const el = document.getElementById(id);
     if (!el) return;
+
     el.addEventListener('input', () => {
         let val = el.value;
         if (type === 'number') val = parseInt(val) || 0;
-        config.welcome.image[key] = val;
+        const parts = section.split('.');
+        let current = config;
+        for (let i = 0; i < parts.length - 1; i++) current = current[parts[i]];
+        current[parts[parts.length - 1]][key] = val;
         if (type === 'color') updateColorDisplays(id, val);
     });
+
     el.addEventListener('change', () => {
         let val = el.value;
         if (type === 'number') val = parseInt(val) || 0;
-        config.welcome.image[key] = val;
-        renderWelcomeCanvas();
+        const parts = section.split('.');
+        let current = config;
+        for (let i = 0; i < parts.length - 1; i++) current = current[parts[i]];
+        current[parts[parts.length - 1]][key] = val;
+        if (section.includes('welcome')) renderWelcomeCanvas();
+        if (section.includes('goodbye')) renderGoodbyeCanvas();
         updateJSONPreview();
+        saveActiveBot();
     });
 }
 
-['avatar-x','avatar-y','avatar-size','avatar-shape','avatar-border','avatar-border-color',
- 'username-x','username-y','username-size','username-color','username-font','username-align',
- 'text-x','text-y','text-size','text-color','text-font','text-align','custom-text'
-].forEach(id => {
-    const type = id.includes('color') ? 'color' : (id.includes('size') || id.includes('x') || id.includes('y') || id.includes('border') ? 'number' : 'string');
-    const key = id.replace(/-([a-z])/g, (m,p) => p.toUpperCase());
-    syncInputToConfig(id, key, type);
-});
+// Welcome image inputs
+syncInputToConfig('avatar-x', 'avatarX', 'number');
+syncInputToConfig('avatar-y', 'avatarY', 'number');
+syncInputToConfig('avatar-size', 'avatarSize', 'number');
+syncInputToConfig('avatar-shape', 'avatarShape');
+syncInputToConfig('avatar-border', 'avatarBorder', 'number');
+syncInputToConfig('avatar-border-color', 'avatarBorderColor', 'color');
+syncInputToConfig('username-x', 'usernameX', 'number');
+syncInputToConfig('username-y', 'usernameY', 'number');
+syncInputToConfig('username-size', 'usernameSize', 'number');
+syncInputToConfig('username-color', 'usernameColor', 'color');
+syncInputToConfig('username-font', 'usernameFont');
+syncInputToConfig('username-align', 'usernameAlign');
+syncInputToConfig('text-x', 'textX', 'number');
+syncInputToConfig('text-y', 'textY', 'number');
+syncInputToConfig('text-size', 'textSize', 'number');
+syncInputToConfig('text-color', 'textColor', 'color');
+syncInputToConfig('text-font', 'textFont');
+syncInputToConfig('text-align', 'textAlign');
+syncInputToConfig('custom-text', 'customText');
 
-// ===== COLOR SYNC =====
+// Goodbye image inputs
+syncInputToConfig('goodbye-bg-url', 'backgroundUrl', 'string', 'goodbye.image');
+syncInputToConfig('goodbye-custom-text', 'customText', 'string', 'goodbye.image');
+syncInputToConfig('goodbye-text-color', 'textColor', 'color', 'goodbye.image');
+syncInputToConfig('goodbye-text-size', 'textSize', 'number', 'goodbye.image');
+
+// ===== COLOR PICKER SYNC =====
 function hexToRgb(hex) {
     const r = parseInt(hex.slice(1,3), 16);
     const g = parseInt(hex.slice(3,5), 16);
@@ -308,6 +433,7 @@ document.querySelectorAll('.layout-option').forEach(opt => {
         applyLayoutPreset(opt.dataset.layout);
         renderWelcomeCanvas();
         updateJSONPreview();
+        saveActiveBot();
     });
 });
 
@@ -328,39 +454,83 @@ function applyLayoutPreset(layout) {
     });
 }
 
-// ===== CANVAS RENDERER =====
-const canvas = document.getElementById('welcome-canvas');
-const ctx = canvas?.getContext('2d');
+// ===== CANVAS RENDERERS =====
+const welcomeCanvas = document.getElementById('welcome-canvas');
+const welcomeCtx = welcomeCanvas?.getContext('2d');
+const goodbyeCanvas = document.getElementById('goodbye-canvas');
+const goodbyeCtx = goodbyeCanvas?.getContext('2d');
 
 function renderWelcomeCanvas() {
-    if (!canvas || !ctx) return;
+    if (!welcomeCanvas || !welcomeCtx) return;
     const W = 1024, H = 450;
     const cfg = config.welcome.image;
-    ctx.clearRect(0, 0, W, H);
+    welcomeCtx.clearRect(0, 0, W, H);
     const loading = document.getElementById('canvas-loading');
     if (loading) loading.style.display = 'block';
 
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.onload = () => {
-        ctx.drawImage(img, 0, 0, W, H);
-        ctx.fillStyle = `rgba(0,0,0,${cfg.overlayOpacity / 100})`;
-        ctx.fillRect(0, 0, W, H);
-        if (cfg.layout !== 'textonly' && cfg.avatarX >= 0) drawAvatar(ctx, cfg);
-        drawTextElements(ctx, cfg);
+        welcomeCtx.drawImage(img, 0, 0, W, H);
+        welcomeCtx.fillStyle = `rgba(0,0,0,${cfg.overlayOpacity / 100})`;
+        welcomeCtx.fillRect(0, 0, W, H);
+        if (cfg.layout !== 'textonly' && cfg.avatarX >= 0) drawAvatar(welcomeCtx, cfg);
+        drawTextElements(welcomeCtx, cfg);
         if (loading) loading.style.display = 'none';
     };
     img.onerror = () => {
-        const grad = ctx.createLinearGradient(0,0,W,H);
+        const grad = welcomeCtx.createLinearGradient(0,0,W,H);
         grad.addColorStop(0, '#1a1a2e');
         grad.addColorStop(1, '#16213e');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, W, H);
-        if (cfg.layout !== 'textonly' && cfg.avatarX >= 0) drawAvatar(ctx, cfg);
-        drawTextElements(ctx, cfg);
+        welcomeCtx.fillStyle = grad;
+        welcomeCtx.fillRect(0, 0, W, H);
+        if (cfg.layout !== 'textonly' && cfg.avatarX >= 0) drawAvatar(welcomeCtx, cfg);
+        drawTextElements(welcomeCtx, cfg);
         if (loading) loading.style.display = 'none';
     };
     img.src = cfg.backgroundUrl;
+}
+
+function renderGoodbyeCanvas() {
+    if (!goodbyeCanvas || !goodbyeCtx) return;
+    const W = 1024, H = 450;
+    const cfg = config.goodbye.image;
+    goodbyeCtx.clearRect(0, 0, W, H);
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+        goodbyeCtx.drawImage(img, 0, 0, W, H);
+        goodbyeCtx.fillStyle = `rgba(0,0,0,${cfg.overlayOpacity / 100})`;
+        goodbyeCtx.fillRect(0, 0, W, H);
+        drawAvatar(goodbyeCtx, cfg);
+        // Goodbye text
+        goodbyeCtx.shadowColor = 'rgba(0,0,0,0.6)';
+        goodbyeCtx.shadowBlur = 8;
+        goodbyeCtx.shadowOffsetX = 2;
+        goodbyeCtx.shadowOffsetY = 2;
+        goodbyeCtx.font = `bold ${cfg.textSize}px "${cfg.textFont}", "Bebas Neue", sans-serif`;
+        goodbyeCtx.fillStyle = cfg.textColor;
+        goodbyeCtx.textAlign = cfg.textAlign;
+        goodbyeCtx.textBaseline = 'middle';
+        goodbyeCtx.fillText(cfg.customText, cfg.textX, cfg.textY);
+        goodbyeCtx.shadowColor = 'transparent';
+        goodbyeCtx.shadowBlur = 0;
+    };
+    img.onerror = () => {
+        const grad = goodbyeCtx.createLinearGradient(0,0,W,H);
+        grad.addColorStop(0, '#2e1a1a');
+        grad.addColorStop(1, '#3e1616');
+        goodbyeCtx.fillStyle = grad;
+        goodbyeCtx.fillRect(0, 0, W, H);
+        drawAvatar(goodbyeCtx, cfg);
+        goodbyeCtx.font = `bold ${cfg.textSize}px "Bebas Neue", sans-serif`;
+        goodbyeCtx.fillStyle = cfg.textColor;
+        goodbyeCtx.textAlign = cfg.textAlign;
+        goodbyeCtx.textBaseline = 'middle';
+        goodbyeCtx.fillText(cfg.customText, cfg.textX, cfg.textY);
+    };
+    img.src = cfg.backgroundUrl || 'https://probot.media/muc2fw4ibY.png';
 }
 
 function drawAvatar(ctx, cfg) {
@@ -402,23 +572,19 @@ function drawTextElements(ctx, cfg) {
     ctx.shadowBlur = 8;
     ctx.shadowOffsetX = 2;
     ctx.shadowOffsetY = 2;
-
     ctx.font = `bold ${cfg.textSize}px "${cfg.textFont}", "Bebas Neue", sans-serif`;
     ctx.fillStyle = cfg.textColor;
     ctx.textAlign = cfg.textAlign;
     ctx.textBaseline = 'middle';
     ctx.fillText(cfg.customText, cfg.textX, cfg.textY);
-
     ctx.font = `bold ${cfg.usernameSize}px "${cfg.usernameFont}", sans-serif`;
     ctx.fillStyle = cfg.usernameColor;
     ctx.textAlign = cfg.usernameAlign;
     ctx.fillText('NomeDoUtilizador', cfg.usernameX, cfg.usernameY);
-
     ctx.shadowBlur = 4;
     ctx.font = `500 22px "${cfg.usernameFont}", sans-serif`;
     ctx.fillStyle = 'rgba(255,255,255,0.85)';
     ctx.fillText('Bem-vindo ao servidor!', cfg.usernameX, cfg.usernameY + cfg.usernameSize * 0.9);
-
     ctx.shadowColor = 'transparent';
     ctx.shadowBlur = 0;
     ctx.shadowOffsetX = 0;
@@ -445,6 +611,7 @@ if (xpMultiplier && xpMultiplierValue) {
         xpMultiplierValue.textContent = xpMultiplier.value + 'x';
         updateConfigFromInput(xpMultiplier);
         updateJSONPreview();
+        saveActiveBot();
     });
 }
 
@@ -482,6 +649,7 @@ document.querySelectorAll('input[data-config], textarea[data-config], select[dat
         updateConfigFromInput(input);
         updateJSONPreview();
         updateStatusBadges();
+        saveActiveBot();
     });
 });
 
@@ -503,7 +671,7 @@ function updateStatusBadges() {
     const botToken = document.getElementById('bot-token');
     const statusBot = document.getElementById('status-bot');
     if (statusBot && botToken) {
-        statusBot.textContent = botToken.value.length > 10 ? 'Configurado' : 'Não configurado';
+        statusBot.textContent = botToken.value.length > 10 ? 'Configurado' : 'Nao configurado';
         statusBot.classList.toggle('configured', botToken.value.length > 10);
     }
     const welcomeEnabled = document.getElementById('welcome-enabled');
@@ -521,7 +689,7 @@ function updateStatusBadges() {
     const logChannel = document.getElementById('log-channel');
     const statusLogs = document.getElementById('status-logs');
     if (statusLogs && logChannel) {
-        statusLogs.textContent = logChannel.value.length > 5 ? 'Definido' : 'Não definido';
+        statusLogs.textContent = logChannel.value.length > 5 ? 'Definido' : 'Nao definido';
         statusLogs.classList.toggle('configured', logChannel.value.length > 5);
     }
     const ticketsEnabled = document.getElementById('tickets-enabled');
@@ -545,21 +713,22 @@ document.querySelectorAll('.var-tag').forEach(tag => {
             textarea.focus();
             updateConfigFromInput(textarea);
             updateJSONPreview();
+            saveActiveBot();
         }
     });
 });
 
 // ===== EMBED BUILDER =====
 function updateEmbedPreview() {
-    const title = document.getElementById('embed-title')?.value || 'Título do Embed';
-    const description = document.getElementById('embed-description')?.value || 'Descrição...';
+    const title = document.getElementById('embed-title')?.value || 'Titulo do Embed';
+    const description = document.getElementById('embed-description')?.value || 'Descricao...';
     const color = document.getElementById('embed-color')?.value || '#5865F2';
     const footer = document.getElementById('embed-footer')?.value || 'Footer';
     const timestamp = document.getElementById('embed-timestamp')?.checked;
     const preview = document.getElementById('embed-preview');
     if (preview) {
         const timeStr = timestamp ? new Date().toLocaleString('pt-PT', { hour: '2-digit', minute: '2-digit' }) : '';
-        preview.innerHTML = `<div class="discord-embed"><div class="embed-color-bar" style="background:${color};"></div><div class="embed-content"><div class="embed-title">${escapeHtml(title)}</div><div class="embed-description">${escapeHtml(description).replace(/\n/g,'<br>')}</div><div class="embed-footer"><span>${escapeHtml(footer)}</span>${timestamp?`<span class="embed-timestamp">Hoje às ${timeStr}</span>`:''}</div></div></div>`;
+        preview.innerHTML = `<div class="discord-embed"><div class="embed-color-bar" style="background:${color};"></div><div class="embed-content"><div class="embed-title">${escapeHtml(title)}</div><div class="embed-description">${escapeHtml(description).replace(/\n/g,'<br>')}</div><div class="embed-footer"><span>${escapeHtml(footer)}</span>${timestamp?`<span class="embed-timestamp">Hoje as ${timeStr}</span>`:''}</div></div></div>`;
     }
     const embedJSON = { title, description, color: parseInt(color.replace('#',''),16), footer: { text: footer } };
     if (timestamp) embedJSON.timestamp = new Date().toISOString();
@@ -581,89 +750,196 @@ document.getElementById('copy-embed-json')?.addEventListener('click', () => {
 });
 
 // ============================================================
-// ===== API FUNCTIONS - EXPORTAÇÃO DIRETA PARA O BOT =====
+// ===== TEST BUTTONS - ENVIAR PARA DISCORD =====
 // ============================================================
 
-// Verificar se API está online
-async function checkAPI() {
-    try {
-        const res = await fetch(`${API_URL}/health`, { method: 'GET' });
-        const data = await res.json();
-        return data.status === 'ok';
-    } catch (e) {
-        return false;
+// Testar boas-vindas (mensagem de texto)
+document.getElementById('test-welcome-btn')?.addEventListener('click', async () => {
+    const channelId = config.welcome.channelId;
+    if (!channelId) {
+        showToast('Define o canal de boas-vindas primeiro!', 'warning');
+        return;
     }
-}
+    await sendTestMessage(channelId, 'welcome');
+});
 
-// GUARDAR na API (exportação direta)
-async function saveConfigToAPI() {
-    const guildId = document.getElementById('guild-id')?.value;
-    const botToken = document.getElementById('bot-token')?.value;
-    const clientId = document.getElementById('client-id')?.value;
-
-    if (!guildId || !botToken || !clientId) {
-        showToast('Preenche Guild ID, Bot Token e Client ID primeiro!', 'warning');
-        return false;
+// Testar boas-vindas (imagem)
+document.getElementById('test-welcome-image-btn')?.addEventListener('click', async () => {
+    const channelId = config.welcome.channelId;
+    if (!channelId) {
+        showToast('Define o canal de boas-vindas primeiro!', 'warning');
+        return;
     }
+    await sendTestImage(channelId, 'welcome');
+});
 
-    showToast('A guardar na API...', 'info');
-
-    try {
-        const res = await fetch(`${API_URL}/config`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                guildId,
-                botToken,
-                clientId,
-                ...config
-            })
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-            showToast('Configuração guardada na API! ✅', 'success');
-            return true;
-        } else {
-            showToast('Erro: ' + (data.error || 'Falha ao guardar'), 'error');
-            return false;
-        }
-    } catch (err) {
-        showToast('API offline. Usa o download do JSON.', 'warning');
-        console.error('API Error:', err);
-        return false;
+// Testar adeus
+document.getElementById('test-goodbye-btn')?.addEventListener('click', async () => {
+    const channelId = config.goodbye.channelId;
+    if (!channelId) {
+        showToast('Define o canal de adeus primeiro!', 'warning');
+        return;
     }
-}
+    await sendTestMessage(channelId, 'goodbye');
+});
 
-// CARREGAR da API
-async function loadConfigFromAPI() {
-    const guildId = document.getElementById('guild-id')?.value;
-    if (!guildId) {
-        showToast('Insere o Guild ID primeiro!', 'warning');
+async function sendTestMessage(channelId, type) {
+    const token = config.bot.token;
+    if (!token) {
+        showToast('Insere o Bot Token primeiro!', 'warning');
         return;
     }
 
-    try {
-        const res = await fetch(`${API_URL}/config/${guildId}`);
-        if (res.status === 404) {
-            showToast('Configuração não encontrada na API', 'info');
-            return;
-        }
-        const data = await res.json();
+    showToast('A enviar mensagem de teste...', 'info');
 
-        // Merge com config atual
-        Object.assign(config, data);
-        populateInputs();
-        updateJSONPreview();
-        updateStatusBadges();
-        showToast('Configuração carregada da API!', 'success');
+    let message, embed = null;
+    if (type === 'welcome') {
+        message = config.welcome.message
+            .replace('[user]', '<@123456789>')
+            .replace('[userName]', 'UtilizadorTeste')
+            .replace('[memberCount]', '42')
+            .replace('[server]', 'Servidor Teste')
+            .replace('[inviter]', '<@987654321>');
+    } else {
+        message = config.goodbye.message
+            .replace('[user]', '<@123456789>')
+            .replace('[userName]', 'UtilizadorTeste')
+            .replace('[memberCount]', '41')
+            .replace('[server]', 'Servidor Teste');
+    }
+
+    try {
+        const res = await fetch(`https://discord.com/api/v10/channels/${channelId}/messages`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bot ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: `**[TESTE]** ${message}` })
+        });
+
+        if (res.ok) {
+            showToast('Mensagem de teste enviada! ✅', 'success');
+        } else {
+            const data = await res.json();
+            showToast('Erro: ' + (data.message || 'Falha ao enviar'), 'error');
+        }
     } catch (err) {
-        showToast('Erro ao carregar da API', 'error');
+        showToast('Erro de rede. Verifica o token.', 'error');
     }
 }
 
-// ===== SAVE POPUP COM OPÇÃO API =====
+async function sendTestImage(channelId, type) {
+    const token = config.bot.token;
+    if (!token) {
+        showToast('Insere o Bot Token primeiro!', 'warning');
+        return;
+    }
+
+    showToast('A gerar e enviar imagem...', 'info');
+
+    try {
+        // Gerar imagem do canvas
+        const canvas = type === 'welcome' ? welcomeCanvas : goodbyeCanvas;
+        if (!canvas) return;
+
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        const formData = new FormData();
+        formData.append('file', blob, 'welcome-test.png');
+        formData.append('payload_json', JSON.stringify({ content: '**[TESTE]** Imagem de boas-vindas' }));
+
+        const res = await fetch(`https://discord.com/api/v10/channels/${channelId}/messages`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bot ${token}` },
+            body: formData
+        });
+
+        if (res.ok) {
+            showToast('Imagem de teste enviada! ✅', 'success');
+        } else {
+            const data = await res.json();
+            showToast('Erro: ' + (data.message || 'Falha ao enviar'), 'error');
+        }
+    } catch (err) {
+        showToast('Erro ao enviar imagem.', 'error');
+        console.error(err);
+    }
+}
+
+// ============================================================
+// ===== MULTI-BOT MODAL =====
+// ============================================================
+
+const addBotModal = document.getElementById('add-bot-modal');
+const addBotBtn = document.getElementById('add-bot-btn');
+const modalCancel = document.getElementById('modal-cancel');
+const modalAddBot = document.getElementById('modal-add-bot');
+const activeBotSelect = document.getElementById('active-bot-select');
+
+addBotBtn?.addEventListener('click', () => {
+    if (addBotModal) addBotModal.style.display = 'flex';
+});
+
+modalCancel?.addEventListener('click', () => {
+    if (addBotModal) addBotModal.style.display = 'none';
+});
+
+modalAddBot?.addEventListener('click', () => {
+    const name = document.getElementById('new-bot-name')?.value;
+    const token = document.getElementById('new-bot-token')?.value;
+    const clientId = document.getElementById('new-bot-clientid')?.value;
+    const guildId = document.getElementById('new-bot-guildid')?.value;
+
+    if (!name || !token || !clientId) {
+        showToast('Preenche nome, token e client ID!', 'warning');
+        return;
+    }
+
+    const botId = 'bot_' + Date.now();
+    const newBot = { id: botId, name, token, clientId, guildId };
+
+    saveBot(botId, newBot);
+    loadBot(botId);
+    updateBotSelector();
+    populateInputs();
+    updateJSONPreview();
+    updateStatusBadges();
+
+    // Limpar modal
+    document.getElementById('new-bot-name').value = '';
+    document.getElementById('new-bot-token').value = '';
+    document.getElementById('new-bot-clientid').value = '';
+    document.getElementById('new-bot-guildid').value = '';
+    addBotModal.style.display = 'none';
+
+    showToast(`Bot "${name}" adicionado!`, 'success');
+});
+
+activeBotSelect?.addEventListener('change', (e) => {
+    const botId = e.target.value;
+    if (!botId) return;
+    saveActiveBot(); // Guarda o atual
+    loadBot(botId);
+    populateInputs();
+    updateJSONPreview();
+    updateStatusBadges();
+    showToast(`Bot "${bots.find(b => b.id === botId)?.name || botId}" carregado!`, 'info');
+});
+
+// ============================================================
+// ===== SAVE / LOAD =====
+// ============================================================
+
+// Guardar rascunho (todos os bots)
+document.getElementById('save-draft')?.addEventListener('click', () => {
+    saveActiveBot();
+    localStorage.setItem('botpanel_bots', JSON.stringify(bots));
+    showToast('Todos os bots guardados!', 'info');
+});
+
+// Popup guardar
+document.getElementById('save-config')?.addEventListener('click', showSavePopup);
+
 function showSavePopup() {
     const overlay = document.getElementById('save-popup-overlay');
     if (overlay) overlay.style.display = 'flex';
@@ -679,50 +955,54 @@ document.getElementById('popup-download')?.addEventListener('click', () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'config.json';
+    a.download = `config_${config.bot.name || 'bot'}.json`;
     a.click();
     URL.revokeObjectURL(url);
     document.getElementById('save-popup-overlay').style.display = 'none';
-    showToast('JSON descarregado!', 'success');
+    showToast('Config descarregada!', 'success');
 });
 
-// Botão "Guardar na API" no popup
-const popupContent = document.querySelector('.save-popup-content');
-if (popupContent) {
-    const apiBtn = document.createElement('button');
-    apiBtn.className = 'btn btn-primary';
-    apiBtn.innerHTML = '<i class="fas fa-cloud"></i> Guardar na API';
-    apiBtn.style.marginTop = '10px';
-    apiBtn.addEventListener('click', async () => {
-        const ok = await saveConfigToAPI();
-        if (ok) document.getElementById('save-popup-overlay').style.display = 'none';
-    });
-    popupContent.appendChild(apiBtn);
-}
-
-// ===== SAVE DRAFT =====
-document.getElementById('save-draft')?.addEventListener('click', () => {
-    localStorage.setItem('botpanel_config', JSON.stringify(config));
-    showToast('Rascunho guardado localmente!', 'info');
+// Guardar na API
+document.getElementById('popup-api-save')?.addEventListener('click', async () => {
+    await saveConfigToAPI();
 });
 
-// ===== LOAD DRAFT =====
-function loadDraft() {
-    const saved = localStorage.getItem('botpanel_config');
-    if (saved) {
-        try {
-            const savedConfig = JSON.parse(saved);
-            Object.assign(config, savedConfig);
-            populateInputs();
-            updateJSONPreview();
-            updateStatusBadges();
-            showToast('Rascunho carregado!', 'info');
-        } catch (e) {
-            console.error('Erro ao carregar rascunho:', e);
+async function saveConfigToAPI() {
+    const guildId = config.bot.guildId;
+    const botToken = config.bot.token;
+    const clientId = config.bot.clientId;
+
+    if (!guildId || !botToken || !clientId) {
+        showToast('Preenche Guild ID, Bot Token e Client ID!', 'warning');
+        return false;
+    }
+
+    showToast('A guardar na API...', 'info');
+
+    try {
+        const res = await fetch(`${API_URL}/config`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ guildId, botToken, clientId, ...config })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            showToast('Guardado na API! ✅', 'success');
+            document.getElementById('save-popup-overlay').style.display = 'none';
+            return true;
+        } else {
+            showToast('Erro: ' + (data.error || 'Falha'), 'error');
+            return false;
         }
+    } catch (err) {
+        showToast('API offline. Usa download.', 'warning');
+        return false;
     }
 }
 
+// ===== POPULATE INPUTS =====
 function populateInputs() {
     document.querySelectorAll('[data-config]').forEach(input => {
         const path = input.dataset.config;
@@ -732,15 +1012,18 @@ function populateInputs() {
             else input.value = value;
         }
     });
+
     ['avatar-border', 'username', 'text'].forEach(prefix => {
         const picker = document.getElementById(prefix + '-color');
         if (picker) updateColorDisplays(prefix + '-color', picker.value);
     });
+
     document.getElementById('welcome-enabled')?.dispatchEvent(new Event('change'));
     document.getElementById('goodbye-enabled')?.dispatchEvent(new Event('change'));
     document.getElementById('tickets-enabled')?.dispatchEvent(new Event('change'));
     document.getElementById('levels-enabled')?.dispatchEvent(new Event('change'));
     document.getElementById('welcome-image-enabled')?.dispatchEvent(new Event('change'));
+    document.getElementById('goodbye-image-enabled')?.dispatchEvent(new Event('change'));
 }
 
 // ===== TOAST =====
@@ -758,17 +1041,21 @@ function showToast(message, type = 'success') {
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
+    updateBotSelector();
+
+    if (activeBotId && bots.find(b => b.id === activeBotId)) {
+        loadBot(activeBotId);
+    } else if (bots.length > 0) {
+        loadBot(bots[0].id);
+    }
+
+    populateInputs();
     updateJSONPreview();
     updateStatusBadges();
-    loadDraft();
-
-    // Verificar API
-    checkAPI().then(online => {
-        if (online) showToast('API online! Podes guardar diretamente.', 'info');
-    });
 
     setTimeout(() => {
         if (document.getElementById('welcome-image-enabled')?.checked) renderWelcomeCanvas();
+        if (document.getElementById('goodbye-image-enabled')?.checked) renderGoodbyeCanvas();
     }, 500);
 
     animateValue('stat-servers', 0, 12, 1000);
